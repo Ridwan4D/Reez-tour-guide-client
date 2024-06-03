@@ -2,8 +2,10 @@ import { Helmet } from "react-helmet";
 import SocialLogin from "../../components/SocialLogin";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
+    const {registerUser} = useAuth();
   const {
     register,
     handleSubmit,
@@ -11,6 +13,7 @@ const Register = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data)
+    const 
   };
   return (
     <div>
