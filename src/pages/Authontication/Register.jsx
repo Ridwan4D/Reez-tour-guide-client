@@ -1,19 +1,30 @@
 import { Helmet } from "react-helmet";
 import SocialLogin from "../../components/SocialLogin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Register = () => {
     const {registerUser} = useAuth();
+    const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data)
-    const 
+    console.log(data.email,data.password)
+
+    registerUser(data.email,data.password)
+    .then(res=>{
+        console.log(res.user);
+        toast.success("Account Created");
+        navigate('/')
+    })
+    .catch(err =>{
+        console.log(err.message);
+    })
   };
   return (
     <div>

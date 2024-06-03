@@ -8,7 +8,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import auth from "../firebase/firebase.config";
+import auth from "../Firebase/firebase.config";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
   // register user with email pass
   const registerUser = (email, password) => {
     setIsLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth,email,password);
   };
 
   // register user with google and github
