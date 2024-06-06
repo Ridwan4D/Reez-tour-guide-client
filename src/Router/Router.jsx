@@ -4,6 +4,8 @@ import Home from "../pages/common/Home/Home";
 import Error from "../pages/Error";
 import Login from "../pages/Authontication/Login";
 import Register from "../pages/Authontication/Register";
+import AllPackages from "../pages/common/Home/AllPackages";
+import Details from "../pages/common/Details";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +16,15 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/allPackages",
+        element: <AllPackages />,
+      },
+      {
+        path: "/details/:id",
+        element: <Details/>,
+        loader: ()=> fetch(`${import.meta.env.VITE_API_URL}/packages`)
       },
     ],
   },

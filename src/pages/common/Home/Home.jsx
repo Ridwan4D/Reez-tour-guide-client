@@ -1,12 +1,20 @@
 import { Helmet } from "react-helmet";
+import Slider from "./Shared/Slider";
+import TravelGuideSection from "./Shared/TravelGuideSection";
 
 const Home = () => {
     return (
-        <div>
+        <div className="space-y-20">
             <Helmet>
                 <title>Home | Reez Tour Guide</title>
             </Helmet>
-            <h1 className="text-4xl font-bold">This is home of tour guid for tourist</h1>
+            {/* Slider */}
+            <Slider/>
+            {/* Travel guide section */}
+            <TravelGuideSection/>
+
+
+            <br /><br /><br /><br /><br /><br />
         </div>
     );
 };

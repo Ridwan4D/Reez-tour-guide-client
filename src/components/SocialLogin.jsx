@@ -1,10 +1,32 @@
+import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 const SocialLogin = () => {
+    const {singUpWithApp} = useAuth();
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+    const navigate = useNavigate();
+
+    const handleSocialLogin = provider =>{
+        singUpWithApp(provider)
+        .then(res=>{
+        console.log(res.user);
+        toast.success("Account Created");
+        navigate('/')
+    })
+    .catch(err =>{
+        console.log(err.message);
+    })
+    }
   return (
     <div>
       <div className="mt-4 flex flex-col lg:flex-row items-center justify-between">
         <div className="w-full lg:w-1/2 mb-2 lg:mb-0">
           <button
             type="button"
+            onClick={()=>handleSocialLogin(googleProvider)}
             className="w-full flex justify-center items-center gap-2 bg-white text-sm text-gray-600 p-2 rounded-md hover:bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-colors duration-300"
           >
             <svg
@@ -36,6 +58,7 @@ const SocialLogin = () => {
         <div className="w-full lg:w-1/2 ml-0 lg:ml-2">
           <button
             type="button"
+            onClick={()=>handleSocialLogin(githubProvider)}
             className="w-full flex justify-center items-center gap-2 bg-white text-sm text-gray-600 p-2 rounded-md hover:bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-colors duration-300"
           >
             <svg

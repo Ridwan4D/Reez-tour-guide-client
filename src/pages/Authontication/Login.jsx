@@ -1,8 +1,31 @@
 import { Helmet } from "react-helmet";
 import SocialLogin from "../../components/SocialLogin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const {loginUser} = useAuth();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data.email,data.password)
+
+    loginUser(data.email,data.password)
+    .then(res=>{
+        console.log(res.user);
+        toast.success("Account Created");
+        navigate('/')
+    })
+    .catch(err =>{
+        console.log(err.message);
+    })
+  };
   return (
     <div>
       <Helmet>
@@ -32,7 +55,7 @@ const Login = () => {
             <div className="mt-4 text-sm text-gray-600 text-center">
               <p>or with email</p>
             </div>
-            <form action="#" method="POST" className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               {/* <!-- Your form elements go here --> */}
               <div>
                 <label
@@ -44,9 +67,10 @@ const Login = () => {
                 <input
                   type="text"
                   id="email"
-                  name="email"
+                  {...register("email", { required: true })}
                   className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                 />
+                {errors.email && <span className="text-sm text-red-600 font-semibold">Email is required</span>}
               </div>
               <div>
                 <label
@@ -58,9 +82,10 @@ const Login = () => {
                 <input
                   type="password"
                   id="password"
-                  name="password"
+                  {...register("password", { required: true })}
                   className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                 />
+                {errors.password && <span className="text-sm text-red-600 font-semibold">Password is required</span>}
               </div>
               <div>
                 <button

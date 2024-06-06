@@ -1,6 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Nav = () => {
+  const { user,logout } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = ()=>{
+    logout();
+    navigate("/login")
+  }
   const navLinks = (
     <>
       <li>
@@ -18,14 +25,44 @@ const Nav = () => {
       <li>
         <NavLink to="/contact">Contact Us</NavLink>
       </li>
-      <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>
+      {user ? (
+        <li>
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 bg-black/50"
+            >
+              <li>
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+              <li>
+                <Link>Dashboard</Link>
+              </li>
+            </ul>
+          </div>
+        </li>
+      ) : (
+        <li>
+          <NavLink to="/login">Login</NavLink>
+        </li>
+      )}
     </>
   );
   return (
-    <div className="navbar bg-[#10b981] md:flex justify-between" id="navbar">
-      <div className="navbar-start w-full md:w-auto flex-row-reverse justify-between">
+    <div className="navbar bg-[#10b981] md:flex justify-between mb-10" id="navbar">
+      <div className="navbar-start w-full lg:w-auto flex-row-reverse justify-between">
         <div className="dropdown dropdown-left">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -47,12 +84,15 @@ const Nav = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
-           {navLinks}
+            {navLinks}
           </ul>
         </div>
         <div className="flex space-x-1">
-            <img src="logo-white.png" alt="" width="50"/>
-            <a href="#" className="text-xl font-bold">Reez <br />Tour Guide</a>
+          <img src="logo-white.png" alt="" width="50" />
+          <a href="#" className="text-xl font-bold">
+            Reez <br />
+            Tour Guide
+          </a>
         </div>
       </div>
       <div className="navbar-end hidden lg:flex md:w-auto">

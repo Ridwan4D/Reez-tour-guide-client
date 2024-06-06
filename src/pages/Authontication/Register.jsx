@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 
+// const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+// const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 const Register = () => {
     const {registerUser} = useAuth();
     const navigate = useNavigate();
@@ -15,7 +17,6 @@ const Register = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data.email,data.password)
-
     registerUser(data.email,data.password)
     .then(res=>{
         console.log(res.user);
