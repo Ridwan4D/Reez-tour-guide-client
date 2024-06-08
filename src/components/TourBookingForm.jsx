@@ -4,7 +4,6 @@ const TourBookingForm = () => {
   const { user } = useAuth();
   return (
     <div>
-      {/* <!-- component --> */}
       <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
         <div className="container max-w-screen-lg mx-auto">
           <div>
@@ -104,18 +103,6 @@ const TourBookingForm = () => {
               </div>
             </div>
           </div>
-
-          <a
-            href="https://www.buymeacoffee.com/dgauderman"
-            target="_blank"
-            className="md:absolute bottom-0 right-0 p-4 float-right"
-          >
-            <img
-              src="https://www.buymeacoffee.com/assets/img/guidelines/logo-mark-3.svg"
-              alt="Buy Me A Coffee"
-              className="transition-all rounded-full w-14 -rotate-45 hover:shadow-sm shadow-lg ring hover:ring-4 ring-white"
-            />
-          </a>
         </div>
       </div>
     </div>
