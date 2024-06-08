@@ -10,7 +10,7 @@ const TravelGuideSection = () => {
         heading={"Tourism and Travel Guide Section"}
         subHeading={"Explore Our Site"}
       />
-      <Tabs defaultIndex={1} onSelect={(index) => console.log(index)}>
+      <Tabs defaultIndex={1} onSelect={() => {}}>
         <TabList>
           <Tab>Overview</Tab>
           <Tab>Our Packages</Tab>

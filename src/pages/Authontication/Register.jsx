@@ -4,28 +4,60 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { updateProfile } from "firebase/auth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
-// const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-// const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const Register = () => {
-    const {registerUser} = useAuth();
-    const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+  const { registerUser } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data.email,data.password)
-    registerUser(data.email,data.password)
-    .then(res=>{
-        console.log(res.user);
-        toast.success("Account Created");
-        navigate('/')
-    })
-    .catch(err =>{
+  const onSubmit = async (data) => {
+    const imageFile = { image: data.image[0] };
+    // console.log(imageFile);
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    console.log(res.data.data.display_url);
+    registerUser(data.email, data.password)
+      .then((result) => {
+        updateProfile(result.user, {
+          displayName: data.name,
+          photoURL: res.data.data.display_url,
+        })
+          .then(() => {
+            const userInfo = {
+              userName: data.name,
+              userEmail: data.email,
+              userImage: res.data.data.display_url,
+            };
+            axiosPublic.post("/users", userInfo).then((reqRes) => {
+              if (reqRes.data.insertedId) {
+                console.log("user added to the data base");
+                toast.success("Account Created");
+                // navigate after register
+                setTimeout(() => {
+                  navigate(location?.state ? location.state : "/");
+                }, 1000);
+              }
+            });
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+        console.log(result.user);
+      })
+      .catch((err) => {
         console.log(err.message);
-    })
+      });
   };
   return (
     <div>
@@ -70,7 +102,11 @@ const Register = () => {
                   {...register("name", { required: true })}
                   className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                 />
-                {errors.name && <span className="text-sm text-red-600 font-semibold">Name is required</span>}
+                {errors.name && (
+                  <span className="text-sm text-red-600 font-semibold">
+                    Name is required
+                  </span>
+                )}
               </div>
               <div>
                 <label
@@ -85,7 +121,11 @@ const Register = () => {
                   id="file_input"
                   className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 />
-                {errors.image && <span className="text-sm text-red-600 font-semibold">Image is required</span>}
+                {errors.image && (
+                  <span className="text-sm text-red-600 font-semibold">
+                    Image is required
+                  </span>
+                )}
               </div>
               <div>
                 <label
@@ -100,7 +140,11 @@ const Register = () => {
                   {...register("email", { required: true })}
                   className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                 />
-                {errors.email && <span className="text-sm text-red-600 font-semibold">Email is required</span>}
+                {errors.email && (
+                  <span className="text-sm text-red-600 font-semibold">
+                    Email is required
+                  </span>
+                )}
               </div>
               <div>
                 <label
@@ -115,7 +159,11 @@ const Register = () => {
                   {...register("password", { required: true })}
                   className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                 />
-                {errors.password && <span className="text-sm text-red-600 font-semibold">Password is required</span>}
+                {errors.password && (
+                  <span className="text-sm text-red-600 font-semibold">
+                    Password is required
+                  </span>
+                )}
               </div>
               <div>
                 <button
