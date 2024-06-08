@@ -3,14 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   font-family: "Inter", sans-serif;
 }
-#navbar a.active {
-    padding-bottom: 2px;
-    background-color: transparent;
-    color: gold;
-    border-bottom: 3px solid gold;
-    border-radius: 0;
 
-  }
+#navbar a.active {
+  padding-bottom: 2px;
+  background-color: transparent;
+  color: gold;
+  border-bottom: 3px solid gold;
+  border-radius: 0;
+}
+
+#sideBar a.active {
+  color: white;
+  background-color: transparent;
+}

@@ -48,7 +48,7 @@ const Nav = () => {
                 <button onClick={handleLogout}>Logout</button>
               </li>
               <li>
-                <Link>Dashboard</Link>
+                <Link to="/dashboard">Dashboard</Link>
               </li>
             </ul>
           </div>

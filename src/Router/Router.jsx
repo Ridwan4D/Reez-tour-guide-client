@@ -6,6 +6,9 @@ import Login from "../pages/Authontication/Login";
 import Register from "../pages/Authontication/Register";
 import AllPackages from "../pages/common/Home/AllPackages";
 import Details from "../pages/common/Details";
+import SecureRoute from "./SecureRoute";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import WishPage from "../pages/common/WishPage";
 
 const router = createBrowserRouter([
   {
@@ -23,19 +26,38 @@ const router = createBrowserRouter([
       },
       {
         path: "/details/:id",
-        element: <Details/>,
-        loader: ()=> fetch(`${import.meta.env.VITE_API_URL}/packages`)
+        element: (
+          <SecureRoute>
+            <Details />
+          </SecureRoute>
+        ),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/packages`),
       },
     ],
   },
   {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
   },
   {
     path: "/register",
-    element: <Register/>,
-  }
+    element: <Register />,
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    errorElement: <Error />,
+    children:[
+      {
+        path:"wishList",
+        element: <WishPage/>
+      },
+      {
+        path:"userHome",
+        element: <WishPage/>
+      },
+    ]
+  },
 ]);
 
 export default router;
