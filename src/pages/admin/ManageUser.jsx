@@ -6,7 +6,8 @@ import toast from "react-hot-toast";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { TbArrowGuide } from "react-icons/tb";
 import useUser from "../../hooks/useUser";
-import { useState } from "react";
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
@@ -84,12 +85,16 @@ const ManageUser = () => {
                           {user.role === "user" ? (
                             <div>
                               <button
+                                data-tooltip-id="makeAdmin"
+                                data-tooltip-content="Make Admin"
                                 onClick={() => handleRole(user, "admin")}
                                 className="btn bg-[#10b981] text-white text-lg"
                               >
                                 <MdAdminPanelSettings />
                               </button>
                               <button
+                                data-tooltip-id="makeGuide"
+                                data-tooltip-content="Make Guide"
                                 onClick={() => handleRole(user, "guide")}
                                 className="btn bg-[#10b981] text-white text-lg"
                               >
@@ -100,6 +105,8 @@ const ManageUser = () => {
                             <div>
                               {user.role === "guide" && (
                                 <button
+                                  data-tooltip-id="makeAdmin"
+                                  data-tooltip-content="Make Admin"
                                   onClick={() => handleRole(user, "admin")}
                                   className="btn bg-[#10b981] text-white text-lg"
                                 >
@@ -125,6 +132,8 @@ const ManageUser = () => {
             </table>
           </div>
         </div>
+        <Tooltip id="makeAdmin" />
+        <Tooltip id="makeGuide" />
       </div>
     </div>
   );
