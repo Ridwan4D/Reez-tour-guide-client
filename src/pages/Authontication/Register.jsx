@@ -38,6 +38,7 @@ const Register = () => {
               userName: data.name,
               userEmail: data.email,
               userImage: res.data.data.display_url,
+              role: "user",
             };
             axiosPublic.post("/users", userInfo).then((reqRes) => {
               if (reqRes.data.insertedId) {

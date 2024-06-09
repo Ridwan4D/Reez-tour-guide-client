@@ -1,34 +1,70 @@
-import { AiFillHome } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import { FaClipboardList } from "react-icons/fa";
+import { FaCodePullRequest } from "react-icons/fa6";
+import { HiUserGroup } from "react-icons/hi";
+import { LuPackagePlus } from "react-icons/lu";
+import { MdAssignmentTurnedIn, MdEditCalendar } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
-  const isAdmin = false;
+  const isAdmin = true;
+  const guide = false;
+  const isUser = false;
   return (
     <div className="flex">
       <div className="md:w-auto md:min-h-screen bg-[#10b981]" id="sideBar">
         <ul className="menu p-4 font-medium text-[#151515] font-cinzel text-lg space-y-1">
-          {isAdmin ? (
+          <li>
+            <NavLink to="/dashboard">
+              <CgProfile />
+              My Profile
+            </NavLink>
+          </li>
+          {guide && (
             <>
               <li>
-                <NavLink to="/dashboard/adminHome">
-                  <AiFillHome />
-                  Admin Home
+                <NavLink to="/dashboard/assignedTour">
+                  <MdAssignmentTurnedIn />
+                  My Assigned Tours
                 </NavLink>
               </li>
             </>
-          ) : (
+          )}
+          {isAdmin && (
             <>
               <li>
-                <NavLink to="/dashboard/userHome">
-                  <AiFillHome />
-                  User Home
+                <NavLink to="/dashboard/addItems">
+                  <LuPackagePlus />
+                  Add Package
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manageUsers">
+                  <HiUserGroup />
+                  All users
+                </NavLink>
+              </li>
+            </>
+          )}
+
+          {isUser && (
+            <>
+              <li>
+                <NavLink to="/dashboard/bookings">
+                  <MdEditCalendar />
+                  My Bookings
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/wishList">
                   <FaClipboardList />
                   My WishList
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/requestAdmin">
+                  <FaCodePullRequest />
+                  Request to Admin
                 </NavLink>
               </li>
             </>

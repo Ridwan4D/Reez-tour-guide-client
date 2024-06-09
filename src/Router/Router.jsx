@@ -8,7 +8,12 @@ import AllPackages from "../pages/common/Home/AllPackages";
 import Details from "../pages/common/Details";
 import SecureRoute from "./SecureRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
-import WishPage from "../pages/common/WishPage";
+import WishPage from "../pages/user/WishPage";
+import Profile from "../pages/common/Profile";
+import RequestToAdmin from "../pages/user/RequestToAdmin";
+import Bookings from "../pages/user/Bookings";
+import ManageUser from "../pages/admin/ManageUser";
+import ManageTour from "../pages/guide/ManageTour";
 
 const router = createBrowserRouter([
   {
@@ -45,18 +50,42 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <SecureRoute>
+        <DashboardLayout />
+      </SecureRoute>
+    ),
     errorElement: <Error />,
-    children:[
+    children: [
       {
-        path:"wishList",
-        element: <WishPage/>
+        path: "wishList",
+        element: <WishPage />,
       },
       {
-        path:"userHome",
-        element: <WishPage/>
+        path: "/dashboard",
+        element: (
+          <SecureRoute>
+            <Profile />
+          </SecureRoute>
+        ),
       },
-    ]
+      {
+        path: "requestAdmin",
+        element: <RequestToAdmin />,
+      },
+      {
+        path: "bookings",
+        element: <Bookings />,
+      },
+      {
+        path: "manageUsers",
+        element: <ManageUser />,
+      },
+      {
+        path: "assignedTour",
+        element: <ManageTour />,
+      },
+    ],
   },
 ]);
 
