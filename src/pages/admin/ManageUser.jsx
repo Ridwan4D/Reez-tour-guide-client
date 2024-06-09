@@ -2,20 +2,15 @@ import Swal from "sweetalert2";
 import SectionTitle from "../../components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { TbArrowGuide } from "react-icons/tb";
+import useUser from "../../hooks/useUser";
+import { useState } from "react";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const result = await axiosSecure.get("/users");
-      return result.data;
-    },
-  });
+  const [users, refetch] = useUser();
 
   const handleDeleteUser = (id) => {
     Swal.fire({
@@ -42,24 +37,16 @@ const ManageUser = () => {
       }
     });
   };
-  const handleMakeAdmin = (user) => {
-    axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
+  const handleRole = (user, role) => {
+    const userInfo = { role };
+    axiosSecure.patch(`/users/admin/${user._id}`, userInfo).then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount) {
         refetch();
-        toast.success(`${user.name} is Admin Now`);
+        toast.success(`${user.userName} is ${role} Now`);
       }
     });
   };
-  //   const handleMakeGuide = (user) => {
-  //     axiosSecure.patch(`/users/guide/${user._id}`).then((res) => {
-  //       console.log(res.data);
-  //       if (res.data.modifiedCount) {
-  //         refetch();
-  //         toast.success(`${user.name} is Admin Now`);
-  //       }
-  //     });
-  //   };
   return (
     <div>
       <SectionTitle heading={"MANAGE ALL USERS"} subHeading={"How many??"} />
@@ -77,6 +64,7 @@ const ManageUser = () => {
                   <th className="py-5 text-center">Name</th>
                   <th className="text-center">email</th>
                   <th className="text-center">role</th>
+                  <th className="text-center">manage</th>
                   <th className="text-center">action</th>
                 </tr>
               </thead>
@@ -85,25 +73,41 @@ const ManageUser = () => {
                 {users?.map((user, idx) => (
                   <tr key={idx} className="font-inter">
                     <th className="text-center font-bold">{idx + 1}</th>
-                    <td className="text-center">{user.name}</td>
-                    <td className="text-center">{user.email}</td>
+                    <td className="text-center">{user.userName}</td>
+                    <td className="text-center">{user.userEmail}</td>
+                    <td className="text-center">{user.role}</td>
                     <td className="text-center">
                       {user.role === "admin" ? (
                         "Admin"
                       ) : (
                         <div>
-                          <button
-                            onClick={() => handleMakeAdmin(user)}
-                            className="btn bg-[#10b981] text-white text-lg"
-                          >
-                            <MdAdminPanelSettings />
-                          </button>
-                          <button
-                            // onClick={() => handleMakeGuide(user)}
-                            className="btn bg-[#10b981] text-white text-lg"
-                          >
-                            <TbArrowGuide />
-                          </button>
+                          {user.role === "user" ? (
+                            <div>
+                              <button
+                                onClick={() => handleRole(user, "admin")}
+                                className="btn bg-[#10b981] text-white text-lg"
+                              >
+                                <MdAdminPanelSettings />
+                              </button>
+                              <button
+                                onClick={() => handleRole(user, "guide")}
+                                className="btn bg-[#10b981] text-white text-lg"
+                              >
+                                <TbArrowGuide />
+                              </button>
+                            </div>
+                          ) : (
+                            <div>
+                              {user.role === "guide" && (
+                                <button
+                                  onClick={() => handleRole(user, "admin")}
+                                  className="btn bg-[#10b981] text-white text-lg"
+                                >
+                                  <MdAdminPanelSettings />
+                                </button>
+                              )}
+                            </div>
+                          )}
                         </div>
                       )}
                     </td>
