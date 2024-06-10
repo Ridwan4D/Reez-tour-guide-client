@@ -2,16 +2,50 @@ import { FaPhoneAlt } from "react-icons/fa";
 import SectionTitle from "../../components/SectionTitle";
 import useAuth from "../../hooks/useAuth";
 import useUsers from "../../hooks/useUsers";
+import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
 const Profile = () => {
   const { user } = useAuth();
   const [users] = useUsers();
-  const role = users.find(role=> role.userEmail == user.email)
+  const axiosSecure = useAxiosSecure();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const role = users.find((role) => role.userEmail == user.email);
   // console.log(role.role);
+
+  const {data: story = []}= useQuery({
+    queryKey: ['stories'],
+    queryFn: async()=>{
+      const res = await axiosSecure.get(`/stories?email=${user.email}`)
+      return res.data;
+    }
+  })
+
+  const onSubmit = (data) => {
+    console.log(data.story);
+    const storyInfo = {
+      email: user.email,
+      story: data.story,
+    }
+    axiosSecure.post('/stories',storyInfo)
+    .then(res=>{
+      if(res.data.insertedId){
+        reset();
+        toast.success('Story Added To Profile')
+      }
+    })
+  };
   return (
     <div>
       <SectionTitle heading="See Your Profile" subHeading="My Profile" />
-      <body className="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover">
+      <div className="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover">
         <div className="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
           {/* <!--Main Col--> */}
           <div
@@ -24,7 +58,9 @@ const Profile = () => {
               <h1 className="text-3xl font-bold pt-8 lg:pt-0">
                 {user.displayName}
               </h1>
-              <p className="font-semibold uppercase text-[#10b981]">{role?.role}</p>
+              <p className="font-semibold uppercase text-[#10b981]">
+                {role?.role}
+              </p>
               <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
               <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
                 <svg
@@ -46,15 +82,47 @@ const Profile = () => {
                 </svg>{" "}
                 {user.email}
               </p>
-              <p className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
-                <div className="h-4 text-green-700 pr-4">
+              <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+                <p className="h-4 text-green-700 pr-4">
                   <FaPhoneAlt />
-                </div>
+                </p>
                 015XXXXXXXXX
-              </p>
+              </div>
 
               {/* add this based on users role */}
-              <div className="pt-12 pb-8"></div>
+              <div className="pt-12 pb-8">
+                {role?.role === "user" && (
+                  <div>
+                    <h3 className="text-2xl font-semibold text-black">
+                      Add Your Tour Story
+                    </h3>
+                    <form
+                      className="space-y-2"
+                      onSubmit={handleSubmit(onSubmit)}
+                    >
+                      <div>
+                        <textarea
+                          type="text"
+                          {...register("story", { required: true })}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Write your story"
+                          required
+                        />
+                        {errors.story && (
+                          <span className="text-sm text-red-600 font-semibold">
+                            Before submit write something
+                          </span>
+                        )}
+                      </div>
+                      <input
+                        type="submit"
+                        value="Add Story"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                      />
+                    </form>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -65,7 +133,7 @@ const Profile = () => {
             />
           </div>
         </div>
-      </body>
+      </div>
     </div>
   );
 };

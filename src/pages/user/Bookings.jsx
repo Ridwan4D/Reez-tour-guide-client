@@ -3,7 +3,7 @@ import SectionTitle from "../../components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { useState } from "react";
 
 const Bookings = () => {
   const { user } = useAuth();
@@ -15,7 +15,33 @@ const Bookings = () => {
       return res.data;
     },
   });
+  const totalPrice = bookings.reduce((total, item) => {
+    return total + item.price;
+  }, 0);
+  const [cost, setCost] = useState(totalPrice);
   //   console.log(bookings);
+
+  if (bookings.length >= 3) {
+    Swal.fire({
+      title: "You Booked 3 Tour",
+      text: "You get 25% discount",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "I Want to Use it??",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const discountPrice = totalPrice - (totalPrice * 25) / 100;
+        setCost(discountPrice);
+        console.log(totalPrice);
+        Swal.fire({
+          title: "Discount Granted",
+          icon: "success",
+        });
+      }
+    });
+  }
   const handleDelete = (id) => {
     // console.log(`dlt id: ${id}`);
     Swal.fire({
@@ -28,7 +54,7 @@ const Bookings = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/booking/${id}`).then((res) => {
+        axiosSecure.delete(`/bookings/${id}`).then((res) => {
           //   console.log(res.data);
           if (res.data.deletedCount) {
             Swal.fire({
@@ -49,6 +75,10 @@ const Bookings = () => {
         subHeading={"My Wish List"}
       />
       <div className="bg-white max-w-6xl mx-auto px-12 py-10 mb-20">
+        <div className="font-cinzel font-bold flex justify-around items-center mb-10">
+          <h2 className="text-3xl">Total Bookings: {bookings.length}</h2>
+          <h2 className="text-3xl">Total Price: {parseInt(cost)}</h2>
+        </div>
         <div>
           <div className="overflow-x-auto rounded-t-xl">
             <table className="table">
@@ -74,7 +104,7 @@ const Bookings = () => {
                     <td className="text-center">{item.guideName}</td>
                     <td className="text-center">{item.date}</td>
                     <td className="text-center">${item.price}</td>
-                    <td className="text-center">${item.status}</td>
+                    <td className="text-center">{item.status}</td>
                     <th className="text-center">
                       <button className="btn bg-[#10b981] text-white">
                         Pay
@@ -85,7 +115,7 @@ const Bookings = () => {
                         onClick={() => handleDelete(item._id)}
                         className="btn bg-[#10b981] text-white"
                       >
-                        <FaRegTrashAlt />
+                        Cancel
                       </button>
                     </th>
                   </tr>
