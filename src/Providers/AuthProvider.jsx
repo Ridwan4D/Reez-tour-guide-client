@@ -9,11 +9,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const axiosPublic = useAxiosPublic();
 
 
   // register user with email pass
@@ -46,12 +48,23 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("logged from :", currentUser);
       setUser(currentUser);
+      if(currentUser){
+        const userInfo = {email:currentUser.email}
+        axiosPublic.post('/jwt',userInfo)
+        .then(res=>{
+          if(res.data.token){
+            localStorage.setItem('access-token',res.data.token)
+          }
+        })
+      }else{
+        localStorage.removeItem('access-token')
+      }
       setIsLoading(false);
     });
     return () => {
       unSubscribe();
     };
-  }, [user?.email]);
+  }, [axiosPublic]);
 
   // logout
   const logout = () => {
