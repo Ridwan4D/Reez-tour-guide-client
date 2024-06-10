@@ -6,7 +6,7 @@ const Details = () => {
   const packages = useLoaderData();
   const { id } = useParams();
   const packageDetail = packages.find((pack) => pack._id == id);
-  console.log(id, packageDetail);
+  // console.log(id, packageDetail);
   const {
     image_1,
     image_2,

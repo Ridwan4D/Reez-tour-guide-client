@@ -1,21 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import PropType from 'prop-types'
-const TourBookingForm = ({tour_name}) => {
+import useGuides from "../hooks/useGuides";
+const TourBookingForm = ({tourName}) => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const { data: guides = [] } = useQuery({
-    queryKey: ["guides"],
-    queryFn: async () => {
-      const result = await axiosSecure.get(`/guides?role=guide`);
-      return result.data;
-    },
-  });
+  const [guides] = useGuides();
   // console.log(guides);
   const {
     register,
@@ -24,15 +18,18 @@ const TourBookingForm = ({tour_name}) => {
   } = useForm();
 
   const onSubmit = data =>{
-    console.log(data.guide,data.date,data.price);
+    // console.log(data.guide,data.date,data.price);
+    const guideName = guides.find(guide=> guide.userEmail == data.guide)
+    // console.log(guideName.userName);
     const bookingItem = {
-      guide: data.guide,
+      guideName: guideName.userName,
+      guideEmail: data.guide,
       date: data.date,
       price: parseFloat(data.price),
       name: user.displayName,
-      email: user.email,
-      image: user.photoURL,
-      tour_name,
+      userEmail: user.email,
+      status: 'In Review',
+      tourName,
     }
     axiosSecure.post('/bookings',bookingItem)
     .then(res=>{
@@ -47,17 +44,11 @@ const TourBookingForm = ({tour_name}) => {
       <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
         <div className="container max-w-screen-lg mx-auto">
           <div>
-            <h2 className="font-semibold text-xl text-gray-600">
-              Responsive Form
-            </h2>
-            <p className="text-gray-500 mb-6">
-              Form is mobile responsive. Give it a try.
-            </p>
 
             <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                 <div className="text-gray-600">
-                  <p className="font-medium text-lg">Personal Details</p>
+                  <p className="font-medium text-lg">Booking Details</p>
                   <p>Please fill out all the fields.</p>
                 </div>
 
@@ -170,6 +161,6 @@ const TourBookingForm = ({tour_name}) => {
   );
 };
 TourBookingForm.propTypes ={
-  tour_name: PropType.string,
+  tourName: PropType.string,
 }
 export default TourBookingForm;
