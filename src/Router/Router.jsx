@@ -14,6 +14,9 @@ import RequestToAdmin from "../pages/user/RequestToAdmin";
 import Bookings from "../pages/user/Bookings";
 import ManageUser from "../pages/admin/ManageUser";
 import ManageTour from "../pages/guide/ManageTour";
+import AdminRoute from "./AdminRoute";
+import GuideRoute from "./GuideRoute";
+import AddPackage from "../pages/admin/AddPackage";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +65,7 @@ const router = createBrowserRouter([
         element: <WishPage />,
       },
       {
-        path: "/dashboard",
+        path: "profile",
         element: (
           <SecureRoute>
             <Profile />
@@ -79,11 +82,27 @@ const router = createBrowserRouter([
       },
       {
         path: "manageUsers",
-        element: <ManageUser />,
+        element: (
+          <AdminRoute>
+            <ManageUser />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "addPackage",
+        element: (
+          <AdminRoute>
+            <AddPackage />
+          </AdminRoute>
+        ),
       },
       {
         path: "assignedTour",
-        element: <ManageTour />,
+        element: (
+          <GuideRoute>
+            <ManageTour />
+          </GuideRoute>
+        ),
       },
     ],
   },

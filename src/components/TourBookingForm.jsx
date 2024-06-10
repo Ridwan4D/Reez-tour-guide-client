@@ -1,7 +1,47 @@
+import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
-
-const TourBookingForm = () => {
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import PropType from 'prop-types'
+const TourBookingForm = ({tour_name}) => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const { data: guides = [] } = useQuery({
+    queryKey: ["guides"],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/guides?role=guide`);
+      return result.data;
+    },
+  });
+  // console.log(guides);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = data =>{
+    console.log(data.guide,data.date,data.price);
+    const bookingItem = {
+      guide: data.guide,
+      date: data.date,
+      price: parseFloat(data.price),
+      name: user.displayName,
+      email: user.email,
+      image: user.photoURL,
+      tour_name,
+    }
+    axiosSecure.post('/bookings',bookingItem)
+    .then(res=>{
+      if(res.data.insertedId){
+        toast.success('Bookings Added')
+        navigate('/dashboard/bookings')
+      }
+    })
+  }
   return (
     <div>
       <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
@@ -21,7 +61,7 @@ const TourBookingForm = () => {
                   <p>Please fill out all the fields.</p>
                 </div>
 
-                <form className="lg:col-span-2">
+                <form className="lg:col-span-2" onSubmit={handleSubmit(onSubmit)}>
                   <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                     <div className="md:col-span-5">
                       <label htmlFor="full_name">Your Name</label>
@@ -58,9 +98,15 @@ const TourBookingForm = () => {
                       <input
                         type="number"
                         id="price"
+                        {...register("price", { required: true })}
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         placeholder="Enter The Amount"
                       />
+                      {errors.price && (
+                        <span className="text-sm text-red-600 font-semibold">
+                          Enter Price
+                        </span>
+                      )}
                     </div>
 
                     <div className="md:col-span-5">
@@ -68,25 +114,40 @@ const TourBookingForm = () => {
                       <input
                         type="date"
                         id="date"
+                        {...register("date", { required: true })}
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                       />
+                      {errors.date && (
+                        <span className="text-sm text-red-600 font-semibold">
+                          Select Tour Date
+                        </span>
+                      )}
                     </div>
                     <div className="md:col-span-5">
                       <label htmlFor="price">Tour Guide</label>
                       <select
                         id="category"
                         defaultValue="default"
+                        {...register("guide", { required: true })}
                         className="bg-gray-50 py-3 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="default" disabled>
                           Select Tour Guide
                         </option>
-                        {/* <option value="salad">Salad</option>
-                    <option value="pizza">Pizza</option>
-                    <option value="dessert">Dessert</option>
-                    <option value="drinks">Drinks</option>
-                    <option value="soup">Soup</option> */}
+                        {guides.map((guide, idx) => {
+                          // console.log(guide);
+                          return (
+                            <option key={idx} value={guide.userEmail}>
+                              {guide.userName}
+                            </option>
+                          );
+                        })}
                       </select>
+                      {errors.guide && (
+                        <span className="text-sm text-red-600 font-semibold">
+                          Select Tour Guide
+                        </span>
+                      )}
                     </div>
 
                     <div className="md:col-span-5 text-right">
@@ -108,5 +169,7 @@ const TourBookingForm = () => {
     </div>
   );
 };
-
+TourBookingForm.propTypes ={
+  tour_name: PropType.string,
+}
 export default TourBookingForm;

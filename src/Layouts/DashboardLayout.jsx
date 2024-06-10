@@ -3,24 +3,41 @@ import { FaClipboardList } from "react-icons/fa";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { HiUserGroup } from "react-icons/hi";
 import { LuPackagePlus } from "react-icons/lu";
-import { MdAssignmentTurnedIn, MdEditCalendar } from "react-icons/md";
-import { NavLink, Outlet } from "react-router-dom";
+import {
+  MdAssignmentTurnedIn,
+  MdEditCalendar,
+  MdOutlineLogout,
+} from "react-icons/md";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import useAdmin from "../hooks/useAdmin";
+import useGuide from "../hooks/useGuide";
 
 const DashboardLayout = () => {
-  const isAdmin = true;
-  const guide = false;
-  const isUser = false;
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  const [isAdmin] = useAdmin();
+  const [isGuide] = useGuide();
+  // console.log(isAdmin);
+  // console.log(isGuide);
+
+  const handleLogout = () => {
+    logout();
+    setTimeout(() => {
+      navigate("/login");
+    }, 500);
+  };
   return (
     <div className="flex">
       <div className="md:w-auto md:min-h-screen bg-[#10b981]" id="sideBar">
         <ul className="menu p-4 font-medium text-[#151515] font-cinzel text-lg space-y-1">
           <li>
-            <NavLink to="/dashboard">
+            <NavLink to="/dashboard/profile">
               <CgProfile />
               My Profile
             </NavLink>
           </li>
-          {guide && (
+          {isGuide && (
             <>
               <li>
                 <NavLink to="/dashboard/assignedTour">
@@ -33,7 +50,7 @@ const DashboardLayout = () => {
           {isAdmin && (
             <>
               <li>
-                <NavLink to="/dashboard/addItems">
+                <NavLink to="/dashboard/addPackage">
                   <LuPackagePlus />
                   Add Package
                 </NavLink>
@@ -47,7 +64,7 @@ const DashboardLayout = () => {
             </>
           )}
 
-          {isUser && (
+          {!isAdmin && !isGuide && (
             <>
               <li>
                 <NavLink to="/dashboard/bookings">
@@ -74,6 +91,12 @@ const DashboardLayout = () => {
           <hr className="border mt-10" />
           <li>
             <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <button onClick={handleLogout}>
+              <MdOutlineLogout />
+              Logout
+            </button>
           </li>
         </ul>
       </div>

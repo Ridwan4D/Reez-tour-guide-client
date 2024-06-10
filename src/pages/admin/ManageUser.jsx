@@ -5,13 +5,14 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { TbArrowGuide } from "react-icons/tb";
-import useUser from "../../hooks/useUser";
+// import useUser from "../../hooks/useUser";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
+import useUsers from "../../hooks/useUsers";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
-  const [users, refetch] = useUser();
+  const [users,refetch] = useUsers();
 
   const handleDeleteUser = (id) => {
     Swal.fire({

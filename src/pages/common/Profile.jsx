@@ -1,10 +1,13 @@
 import { FaPhoneAlt } from "react-icons/fa";
 import SectionTitle from "../../components/SectionTitle";
 import useAuth from "../../hooks/useAuth";
+import useUsers from "../../hooks/useUsers";
 
 const Profile = () => {
   const { user } = useAuth();
-//   console.log(user.photoURL);
+  const [users] = useUsers();
+  const role = users.find(role=> role.userEmail == user.email)
+  // console.log(role.role);
   return (
     <div>
       <SectionTitle heading="See Your Profile" subHeading="My Profile" />
@@ -21,6 +24,7 @@ const Profile = () => {
               <h1 className="text-3xl font-bold pt-8 lg:pt-0">
                 {user.displayName}
               </h1>
+              <p className="font-semibold uppercase text-[#10b981]">{role?.role}</p>
               <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
               <p className="pt-4 text-base font-bold flex items-center justify-center lg:justify-start">
                 <svg
