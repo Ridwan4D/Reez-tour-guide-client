@@ -17,6 +17,7 @@ import ManageTour from "../pages/guide/ManageTour";
 import AdminRoute from "./AdminRoute";
 import GuideRoute from "./GuideRoute";
 import AddPackage from "../pages/admin/AddPackage";
+import StoryDetails from "../pages/common/StoryDetails";
 
 const router = createBrowserRouter([
   {
@@ -45,10 +46,10 @@ const router = createBrowserRouter([
         path: "/storyDetails/:id",
         element: (
           <SecureRoute>
-            <Details />
+            <StoryDetails />
           </SecureRoute>
         ),
-        loader: () => fetch(`${import.meta.env.VITE_API_URL}/stories`),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/allStories`),
       },
     ],
   },

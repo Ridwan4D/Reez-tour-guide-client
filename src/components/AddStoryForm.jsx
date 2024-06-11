@@ -3,7 +3,11 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import PropType from "prop-types";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddStoryForm = ({ refetch }) => {
+  const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const {
@@ -12,8 +16,16 @@ const AddStoryForm = ({ refetch }) => {
     reset,
     formState: { errors },
   } = useForm();
+  
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
+    const imageFile = { image: data.image[0] };
+    // console.log(imageFile);
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
     console.log(data.story);
     const storyInfo = {
       email: user.email,
@@ -23,6 +35,7 @@ const AddStoryForm = ({ refetch }) => {
       tourType: data.tour_type,
       guideName: data.guide_name,
       tourDate: data.date,
+      placeImage: res.data.data.display_url
     };
     axiosSecure.post("/stories", storyInfo).then((res) => {
       if (res.data.insertedId) {
@@ -115,6 +128,25 @@ const AddStoryForm = ({ refetch }) => {
               </span>
             )}
           </div>
+        </div>
+        <div>
+          <label
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            htmlFor="file_input"
+          >
+            Add a Picture
+          </label>
+          <input
+            type="file"
+            {...register("image", { required: true })}
+            id="file_input"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+          />
+          {errors.image && (
+            <span className="text-sm text-red-600 font-semibold">
+              Image is required
+            </span>
+          )}
         </div>
         <div className="mb-5">
           <label
