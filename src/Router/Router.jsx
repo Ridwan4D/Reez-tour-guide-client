@@ -21,6 +21,9 @@ import StoryDetails from "../pages/common/StoryDetails";
 import AllStoriesPage from "../pages/common/AllStoriesPage";
 import GuideDetails from "../pages/common/GuideDetails";
 import AllGuides from "../pages/common/AllGuides";
+import Contact from "../pages/common/Contact";
+import Blog from "../pages/common/Blog";
+import AboutUs from "../pages/common/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,18 @@ const router = createBrowserRouter([
       {
         path: "/allPackages",
         element: <AllPackages />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/aboutUs",
+        element: <AboutUs />,
+      },
+      {
+        path: "/blogs",
+        element: <Blog />,
       },
       {
         path: "/allStories",

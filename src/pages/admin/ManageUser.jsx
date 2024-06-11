@@ -9,10 +9,11 @@ import { TbArrowGuide } from "react-icons/tb";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import useUsers from "../../hooks/useUsers";
+import { FcCancel } from "react-icons/fc";
 
 const ManageUser = () => {
   const axiosSecure = useAxiosSecure();
-  const [users,refetch] = useUsers();
+  const [users, refetch] = useUsers();
 
   const handleDeleteUser = (id) => {
     Swal.fire({
@@ -39,13 +40,17 @@ const ManageUser = () => {
       }
     });
   };
-  const handleRole = (user, role) => {
-    const userInfo = { role };
-    axiosSecure.patch(`/users/admin/${user._id}`, userInfo).then((res) => {
+  const handleRole = (user, role, requested) => {
+    const userInfo = { role, requested };
+    axiosSecure.put(`/users/admin/${user._id}`, userInfo).then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount) {
         refetch();
-        toast.success(`${user.userName} is ${role} Now`);
+        if (role == "user") {
+          toast.dismiss(`${user.userName}'s request is canceled`);
+        } else {
+          toast.success(`${user.userName} is ${role} Now`);
+        }
       }
     });
   };
@@ -77,7 +82,9 @@ const ManageUser = () => {
                     <th className="text-center font-bold">{idx + 1}</th>
                     <td className="text-center">{user.userName}</td>
                     <td className="text-center">{user.userEmail}</td>
-                    <td className="text-center">{user.role}</td>
+                    <td className="text-center">
+                      {user.role} {user.requested && <span>(requested)</span>}
+                    </td>
                     <td className="text-center">
                       {user.role === "admin" ? (
                         "Admin"
@@ -88,7 +95,7 @@ const ManageUser = () => {
                               <button
                                 data-tooltip-id="makeAdmin"
                                 data-tooltip-content="Make Admin"
-                                onClick={() => handleRole(user, "admin")}
+                                onClick={() => handleRole(user, "admin", false)}
                                 className="btn bg-[#10b981] text-white text-lg"
                               >
                                 <MdAdminPanelSettings />
@@ -96,11 +103,23 @@ const ManageUser = () => {
                               <button
                                 data-tooltip-id="makeGuide"
                                 data-tooltip-content="Make Guide"
-                                onClick={() => handleRole(user, "guide")}
+                                onClick={() => handleRole(user, "guide", false)}
                                 className="btn bg-[#10b981] text-white text-lg"
                               >
                                 <TbArrowGuide />
                               </button>
+                              {user.requested && (
+                                <button
+                                  data-tooltip-id="makeGuide"
+                                  data-tooltip-content="Make Guide"
+                                  onClick={() =>
+                                    handleRole(user, "user", false)
+                                  }
+                                  className="btn bg-[#10b981] text-white text-lg"
+                                >
+                                  <FcCancel />
+                                </button>
+                              )}
                             </div>
                           ) : (
                             <div>
@@ -108,7 +127,9 @@ const ManageUser = () => {
                                 <button
                                   data-tooltip-id="makeAdmin"
                                   data-tooltip-content="Make Admin"
-                                  onClick={() => handleRole(user, "admin")}
+                                  onClick={() =>
+                                    handleRole(user, "admin", false)
+                                  }
                                   className="btn bg-[#10b981] text-white text-lg"
                                 >
                                   <MdAdminPanelSettings />

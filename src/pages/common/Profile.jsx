@@ -57,14 +57,14 @@ const Profile = () => {
                 <p className="h-4 text-green-700 pr-4">
                   <FaPhoneAlt />
                 </p>
-                {role?.role == "guide" ? (
+                {role?.role == "guide" || role?.role == "admin" ? (
                   <span>{role?.phone}</span>
                 ) : (
                   "015XXXXXXXXX"
                 )}
               </div>
 
-              {role?.role == "guide" && (
+              {role?.role == "guide" || role?.role == "admin"  && (
                 <div>
                   <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
                     <p className="h-4 text-green-700 pr-4">
