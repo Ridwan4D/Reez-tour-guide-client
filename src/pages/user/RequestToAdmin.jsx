@@ -10,7 +10,7 @@ const RequestToAdmin = () => {
   const axiosSecure = useAxiosSecure();
   const [users, refetch] = useUsers();
   const isSame = users.find((item) => item.userEmail == user.email);
-  console.log(isSame.requested);
+  // console.log(isSame?.requested);
   const {
     register,
     handleSubmit,
@@ -25,7 +25,6 @@ const RequestToAdmin = () => {
       education: data.education,
       experience: data.experience,
       skill: data.skill,
-      requested: true,
     };
     axiosSecure.put(`/user/${user.email}`, userInfo).then((res) => {
       if (res.data.modifiedCount) {
@@ -41,7 +40,7 @@ const RequestToAdmin = () => {
       <h3 className="text-base md:text-3xl font-semibold text-black mb-5">
         Provide Info For Request
       </h3>
-      {isSame.requested === true ? (
+      {isSame?.requested === true ? (
         <div className="h-[50vh] flex items-center justify-center">
           <h3 className="text-lg md:text-5xl font-black text-[#10b891] mb-5">
             Requested To The Admin

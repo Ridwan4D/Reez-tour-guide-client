@@ -19,6 +19,8 @@ import GuideRoute from "./GuideRoute";
 import AddPackage from "../pages/admin/AddPackage";
 import StoryDetails from "../pages/common/StoryDetails";
 import AllStoriesPage from "../pages/common/AllStoriesPage";
+import GuideDetails from "../pages/common/GuideDetails";
+import AllGuides from "../pages/common/AllGuides";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/allGuides",
+        element: (
+          <SecureRoute>
+            <AllGuides />
+          </SecureRoute>
+        ),
+      },
+      {
         path: "/details/:id",
         element: (
           <SecureRoute>
@@ -59,6 +69,15 @@ const router = createBrowserRouter([
           </SecureRoute>
         ),
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/allStories`),
+      },
+      {
+        path: "/guideDetails/:id",
+        element: (
+          <SecureRoute>
+            <GuideDetails />
+          </SecureRoute>
+        ),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/guides?role=guide`),
       },
     ],
   },

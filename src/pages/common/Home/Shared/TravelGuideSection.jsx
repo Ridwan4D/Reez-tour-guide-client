@@ -2,6 +2,7 @@ import SectionTitle from "../../../../components/SectionTitle";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import HomePackages from "./HomePackages";
+import HomeGuides from "./HomeGuides";
 
 const TravelGuideSection = () => {
   return (
@@ -94,7 +95,9 @@ const TravelGuideSection = () => {
         <TabPanel>
           <HomePackages/>
         </TabPanel>
-        <TabPanel>Hello World 3</TabPanel>
+        <TabPanel>
+          <HomeGuides/>
+        </TabPanel>
       </Tabs>
     </div>
   );

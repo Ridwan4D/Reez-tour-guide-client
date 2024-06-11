@@ -34,7 +34,7 @@ const Bookings = () => {
       if (result.isConfirmed) {
         const discountPrice = totalPrice - (totalPrice * 25) / 100;
         setCost(discountPrice);
-        refetch()
+        refetch();
         console.log(totalPrice);
         Swal.fire({
           title: "Discount Granted",
@@ -107,12 +107,16 @@ const Bookings = () => {
                     <td className="text-center">${item.price}</td>
                     <td className="text-center">{item.status}</td>
                     <th className="text-center">
-                      <button className="btn bg-[#10b981] text-white">
+                      <button
+                        disabled={item.status === "Rejected"}
+                        className="btn bg-[#10b981] text-white"
+                      >
                         Pay
                       </button>
                     </th>
                     <th className="text-center">
                       <button
+                        disabled={item.status === "Accepted"}
                         onClick={() => handleDelete(item._id)}
                         className="btn bg-[#10b981] text-white"
                       >

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import PropType from 'prop-types'
 import useGuides from "../hooks/useGuides";
-const TourBookingForm = ({tourName}) => {
+const TourBookingForm = ({tourName,tourPrice}) => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const TourBookingForm = ({tourName}) => {
       guideName: guideName.userName,
       guideEmail: data.guide,
       date: data.date,
-      price: parseFloat(data.price),
+      price: parseFloat(tourPrice),
       name: user.displayName,
       userEmail: user.email,
       status: 'In Review',
@@ -89,15 +89,11 @@ const TourBookingForm = ({tourName}) => {
                       <input
                         type="number"
                         id="price"
-                        {...register("price", { required: true })}
+                        defaultValue={tourPrice}
+                        disabled
                         className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         placeholder="Enter The Amount"
                       />
-                      {errors.price && (
-                        <span className="text-sm text-red-600 font-semibold">
-                          Enter Price
-                        </span>
-                      )}
                     </div>
 
                     <div className="md:col-span-5">
@@ -162,5 +158,6 @@ const TourBookingForm = ({tourName}) => {
 };
 TourBookingForm.propTypes ={
   tourName: PropType.string,
+  tourPrice: PropType.number,
 }
 export default TourBookingForm;

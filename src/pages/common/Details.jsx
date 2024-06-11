@@ -85,7 +85,7 @@ const Details = () => {
       </div>
       {/* tour guides */}
       {/* booking form */}
-      <TourBookingForm tourName={tour_name}/>
+      <TourBookingForm tourName={tour_name} tourPrice={price}/>
     </div>
   );
 };

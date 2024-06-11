@@ -2,19 +2,31 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../components/SectionTitle";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const ManageTour = () => {
-    const { user } = useAuth();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-    const { data: bookings = [], refetch } = useQuery({
-        queryKey: ["bookings"],
-        queryFn: async () => {
-          const res = await axiosSecure.get(`/bookings?email=${user.email}`);
-          return res.data;
-        },
-      });
-    return (
-        <div>
+  const { data: bookings = [], refetch } = useQuery({
+    queryKey: ["bookings"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/bookings/${user.email}`);
+      return res.data;
+    },
+  });
+  const handleAction = (id, status) => {
+    // console.log(id,status);
+    const bookingInfo = { status };
+    axiosSecure.patch(`/bookings/${id}`, bookingInfo).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount) {
+        toast.success(`Bookings ${status}`);
+        refetch();
+      }
+    });
+  };
+  return (
+    <div>
       <SectionTitle
         heading={"Check Out Your Wish List"}
         subHeading={"My Wish List"}
@@ -35,7 +47,7 @@ const ManageTour = () => {
                   <th className="text-center">Date</th>
                   <th className="text-center">price</th>
                   <th className="text-center">status</th>
-                  <th className="text-center">Pay</th>
+                  <th className="text-center">Action</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>
@@ -45,21 +57,26 @@ const ManageTour = () => {
                   <tr key={idx} className="font-inter">
                     <th className="text-center font-bold">{idx + 1}</th>
                     <td className="text-center">{item.tourName}</td>
-                    <td className="text-center">{item.guideName}</td>
+                    <td className="text-center">{item.name}</td>
                     <td className="text-center">{item.date}</td>
                     <td className="text-center">${item.price}</td>
                     <td className="text-center">{item.status}</td>
                     <th className="text-center">
-                      <button className="btn bg-[#10b981] text-white">
-                        Pay
+                      <button
+                        disabled={item.status === "Rejected"}
+                        onClick={() => handleAction(item._id, "Accepted")}
+                        className="btn bg-[#10b981] text-white"
+                      >
+                        Accept
                       </button>
                     </th>
                     <th className="text-center">
                       <button
-                        onClick={() => handleDelete(item._id)}
+                        disabled={item.status === "Accepted"}
+                        onClick={() => handleAction(item._id, "Rejected")}
                         className="btn bg-[#10b981] text-white"
                       >
-                        Cancel
+                        Reject
                       </button>
                     </th>
                   </tr>
@@ -70,7 +87,7 @@ const ManageTour = () => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default ManageTour;
