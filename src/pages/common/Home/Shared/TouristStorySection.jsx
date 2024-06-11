@@ -5,7 +5,7 @@ import useStories from "../../../../hooks/useStories";
 
 const TouristStorySection = () => {
   const [stories] = useStories();
-  console.log(stories);
+  // console.log(stories);
   return (
     <div>
         <SectionTitle heading="Tourist Story Section" subHeading="Read The Story of Our Client"/>

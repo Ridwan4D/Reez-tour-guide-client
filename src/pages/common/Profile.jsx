@@ -2,26 +2,16 @@ import { FaPhoneAlt } from "react-icons/fa";
 import SectionTitle from "../../components/SectionTitle";
 import useAuth from "../../hooks/useAuth";
 import useUsers from "../../hooks/useUsers";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-import AddStoryForm from "../../components/AddStoryForm";
-import StoryCard from "../../components/StoryCard";
+import IfRoleUser from "../user/IfRoleUser";
+import { MdOutlineCastForEducation } from "react-icons/md";
+import { SiSkillshare } from "react-icons/si";
+import { AiOutlineNodeExpand } from "react-icons/ai";
 
 const Profile = () => {
   const { user } = useAuth();
   const [users] = useUsers();
-  const axiosSecure = useAxiosSecure();
   const role = users.find((role) => role.userEmail == user.email);
   // console.log(role.role);
-
-  const { data: stories = [], refetch } = useQuery({
-    queryKey: ["stories"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/stories?email=${user.email}`);
-      return res.data;
-    },
-  });
-  // console.log(stories);
 
   return (
     <div>
@@ -67,8 +57,35 @@ const Profile = () => {
                 <p className="h-4 text-green-700 pr-4">
                   <FaPhoneAlt />
                 </p>
-                015XXXXXXXXX
+                {role?.role == "guide" ? (
+                  <span>{role?.phone}</span>
+                ) : (
+                  "015XXXXXXXXX"
+                )}
               </div>
+
+              {role?.role == "guide" && (
+                <div>
+                  <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+                    <p className="h-4 text-green-700 pr-4">
+                      <MdOutlineCastForEducation />
+                    </p>
+                    {role?.education}
+                  </div>
+                  <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+                    <p className="h-4 text-green-700 pr-4">
+                    <SiSkillshare />
+                    </p>
+                    {role?.skill}
+                  </div>
+                  <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+                    <p className="h-4 text-green-700 pr-4">
+                    <AiOutlineNodeExpand />
+                    </p>
+                    {role?.experience}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -82,25 +99,7 @@ const Profile = () => {
       </div>
       <hr className="border border-dashed border-[#10b981]" />
       {/* add this based on users role */}
-      <div>
-        {role?.role === "user" && (
-          <div className="p-1">
-            <h3 className="text-xl md:text-3xl font-semibold text-black">
-              Add New Story
-            </h3>
-            <AddStoryForm refetch={refetch} />
-            <hr className="border border-dashed border-[#10b981]" />
-            <h3 className="text-xl md:text-3xl font-semibold text-black">
-              Story You have added
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-5 my-7">
-              {stories.map((story, idx) => (
-                <StoryCard key={idx} story={story}></StoryCard>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      {role?.role === "user" && <IfRoleUser />}
     </div>
   );
 };
