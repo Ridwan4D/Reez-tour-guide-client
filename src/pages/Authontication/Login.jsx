@@ -4,10 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const Login = () => {
   const {loginUser} = useAuth();
   const navigate = useNavigate();
+  const [loginErr, setLoginErr] = useState("");
   const {
     register,
     handleSubmit,
@@ -17,13 +19,18 @@ const Login = () => {
     console.log(data.email,data.password)
 
     loginUser(data.email,data.password)
-    .then(res=>{
-        console.log(res.user);
-        toast.success("Account Created");
-        navigate('/')
+    .then(() => {
+      // console.log(result.user);
+      toast.success("Logged In");
+      setTimeout(() => {
+        navigate(location?.state ? location.state : "/");
+      }, 1000);
     })
-    .catch(err =>{
-        console.log(err.message);
+    .catch((error) => {
+      // console.log(error.message);
+      if (error.message == "Firebase: Error (auth/invalid-credential).") {
+        setLoginErr("Invalid User or Password");
+      }
     })
   };
   return (
@@ -87,6 +94,7 @@ const Login = () => {
                 />
                 {errors.password && <span className="text-sm text-red-600 font-semibold">Password is required</span>}
               </div>
+              {loginErr && <p className="text-sm text-red-600">{loginErr}</p>}
               <div>
                 <button
                   type="submit"

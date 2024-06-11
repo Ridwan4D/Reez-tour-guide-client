@@ -30,7 +30,7 @@ const DashboardLayout = () => {
   return (
     <div className="flex">
       <div className="md:w-auto md:min-h-screen bg-[#10b981]" id="sideBar">
-        <ul className="menu p-4 font-medium text-[#151515] font-cinzel text-lg space-y-1">
+        <ul className="menu md:p-4 font-medium text-[#151515] font-cinzel text-sm md:text-lg space-y-1">
           <li>
             <NavLink to="/dashboard/profile">
               <CgProfile />

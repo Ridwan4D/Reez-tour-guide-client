@@ -41,6 +41,15 @@ const router = createBrowserRouter([
         ),
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/packages`),
       },
+      {
+        path: "/storyDetails/:id",
+        element: (
+          <SecureRoute>
+            <Details />
+          </SecureRoute>
+        ),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/stories`),
+      },
     ],
   },
   {

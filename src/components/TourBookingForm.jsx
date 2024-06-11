@@ -34,7 +34,7 @@ const TourBookingForm = ({tourName}) => {
     axiosSecure.post('/bookings',bookingItem)
     .then(res=>{
       if(res.data.insertedId){
-        toast.success('Bookings Added')
+        toast.success('Confirm your Booking')
         navigate('/dashboard/bookings')
       }
     })
@@ -145,7 +145,7 @@ const TourBookingForm = ({tourName}) => {
                       <div className="inline-flex items-end">
                         <input
                           type="submit"
-                          value="Submit"
+                          value="Book Now"
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         />
                       </div>
