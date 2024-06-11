@@ -85,6 +85,9 @@ const Profile = () => {
       <div>
         {role?.role === "user" && (
           <div className="p-1">
+            <h3 className="text-xl md:text-3xl font-semibold text-black">
+              Add New Story
+            </h3>
             <AddStoryForm refetch={refetch} />
             <hr className="border border-dashed border-[#10b981]" />
             <h3 className="text-xl md:text-3xl font-semibold text-black">

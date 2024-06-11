@@ -47,9 +47,6 @@ const AddStoryForm = ({ refetch }) => {
   };
   return (
     <div className="max-w-5xl mx-auto">
-      <h3 className="text-xl md:text-3xl font-semibold text-black">
-        Add New Story
-      </h3>
       <form onSubmit={handleSubmit(onSubmit)} className="border-4 p-5 my-10">
         <div className="grid gap-6 mb-6 md:grid-cols-2">
           <div>

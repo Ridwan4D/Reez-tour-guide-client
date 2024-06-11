@@ -18,6 +18,7 @@ import AdminRoute from "./AdminRoute";
 import GuideRoute from "./GuideRoute";
 import AddPackage from "../pages/admin/AddPackage";
 import StoryDetails from "../pages/common/StoryDetails";
+import AllStoriesPage from "../pages/common/AllStoriesPage";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
       {
         path: "/allPackages",
         element: <AllPackages />,
+      },
+      {
+        path: "/allStories",
+        element: (
+          <SecureRoute>
+            <AllStoriesPage />
+          </SecureRoute>
+        ),
       },
       {
         path: "/details/:id",
