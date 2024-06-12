@@ -3,10 +3,18 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import HomePackages from "./HomePackages";
 import HomeGuides from "./HomeGuides";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../../../utils/varient";
 
 const TravelGuideSection = () => {
   return (
-    <div>
+    <motion.div
+      variants={fadeIn("up", 0.2)}
+      initial="hidden"
+      whileInView={"show"}
+      viewport={{ once: false, amount: 0.7 }}
+    >
       <SectionTitle
         heading={"Tourism and Travel Guide Section"}
         subHeading={"Explore Our Site"}
@@ -70,10 +78,10 @@ const TravelGuideSection = () => {
                 </h2>
                 <ul className="text-base list-disc font-semibold text-blue-500">
                   <li>
-                    <a href="">Contact Us</a>
+                    <Link to="/contact">Contact Us</Link>
                   </li>
                   <li>
-                    <a href="">See Our Blogs</a>
+                    <Link to="blogs">See Our Blogs</Link>
                   </li>
                 </ul>
               </div>
@@ -93,13 +101,13 @@ const TravelGuideSection = () => {
           </section>
         </TabPanel>
         <TabPanel>
-          <HomePackages/>
+          <HomePackages />
         </TabPanel>
         <TabPanel>
-          <HomeGuides/>
+          <HomeGuides />
         </TabPanel>
       </Tabs>
-    </div>
+    </motion.div>
   );
 };
 
