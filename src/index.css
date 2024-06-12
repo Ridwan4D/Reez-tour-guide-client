@@ -19,3 +19,7 @@ body {
   color: white;
   background-color: transparent;
 }
+
+ .selected{
+  background-color: rgb(44, 116, 251); 
+}

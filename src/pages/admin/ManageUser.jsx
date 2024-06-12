@@ -10,11 +10,29 @@ import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import useUsers from "../../hooks/useUsers";
 import { FcCancel } from "react-icons/fc";
+import { useLoaderData } from "react-router-dom";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const ManageUser = () => {
+  const { count } = useLoaderData();
+  const itemPerPage = 10;
+  const numberOfPages = Math.ceil(count / itemPerPage);
+  const pages = [...Array(numberOfPages).keys()];
+  const [currentPage, setCurrentPage] = useState(0);
+  console.log(pages);
+  console.log(count);
   const axiosSecure = useAxiosSecure();
-  const [users, refetch] = useUsers();
-
+  // const [users, refetch] = useUsers();
+  const { data: users = [], refetch } = useQuery({
+    queryKey: ["allUsers"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/users?page=${currentPage}&size=${itemPerPage}`
+      );
+      return res.data;
+    },
+  });
   const handleDeleteUser = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -43,7 +61,7 @@ const ManageUser = () => {
   const handleRole = (user, role, requested) => {
     const userInfo = { role, requested };
     axiosSecure.put(`/users/admin/${user._id}`, userInfo).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.modifiedCount) {
         refetch();
         if (role == "user") {
@@ -156,6 +174,22 @@ const ManageUser = () => {
         </div>
         <Tooltip id="makeAdmin" />
         <Tooltip id="makeGuide" />
+      </div>
+      <div className="max-w-5xl mx-auto my-7 text-center space-x-2">
+        {pages.map((page) => (
+          <button
+            key={page}
+            className={`btn bg-[#10b981] text-white ${
+              currentPage === page && "selected"
+            }`}
+            onClick={() => {
+              refetch();
+              setCurrentPage(page);
+            }}
+          >
+            {page + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

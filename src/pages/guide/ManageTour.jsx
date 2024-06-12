@@ -18,7 +18,7 @@ const ManageTour = () => {
     // console.log(id,status);
     const bookingInfo = { status };
     axiosSecure.patch(`/bookings/${id}`, bookingInfo).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.modifiedCount) {
         toast.success(`Bookings ${status}`);
         refetch();

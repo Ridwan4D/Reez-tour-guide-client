@@ -20,14 +20,6 @@ const Home = () => {
       <TourTypeSection />
       {/* Tourist Story Section */}
       <TouristStorySection />
-      <hr className="border border-dashed border-[#10b981] mt-5" />
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 };

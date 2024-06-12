@@ -5,7 +5,7 @@ const TripTypePackage = () => {
   const packages = useLoaderData();
   const { type } = useParams();
   const packageTypes = packages.filter((pack) => pack.trip_type == type);
-  console.log(packageTypes);
+  // console.log(packageTypes);
   return (
     <div>
       <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">

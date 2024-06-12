@@ -26,7 +26,7 @@ const Register = () => {
         "content-type": "multipart/form-data",
       },
     });
-    console.log(res.data.data.display_url);
+    // console.log(res.data.data.display_url);
     registerUser(data.email, data.password)
       .then((result) => {
         updateProfile(result.user, {
@@ -42,7 +42,7 @@ const Register = () => {
             };
             axiosPublic.post("/users", userInfo).then((reqRes) => {
               if (reqRes.data.insertedId) {
-                console.log("user added to the data base");
+                // console.log("user added to the data base");
                 toast.success("Account Created");
                 // navigate after register
                 setTimeout(() => {
@@ -52,12 +52,12 @@ const Register = () => {
             });
           })
           .catch((error) => {
-            console.log(error.message);
+            // console.log(error.message);
           });
-        console.log(result.user);
+        // console.log(result.user);
       })
       .catch((err) => {
-        console.log(err.message);
+        // console.log(err.message);
       });
   };
   return (

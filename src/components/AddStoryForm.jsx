@@ -26,7 +26,7 @@ const AddStoryForm = ({ refetch }) => {
         "content-type": "multipart/form-data",
       },
     });
-    console.log(data.story);
+    // console.log(data.story);
     const storyInfo = {
       email: user.email,
       name: user.displayName,

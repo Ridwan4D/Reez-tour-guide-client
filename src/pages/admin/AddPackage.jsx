@@ -85,7 +85,7 @@ const AddPackage = () => {
     axiosSecure.post("/packages", packageInfo).then((res) => {
       if (res.data.insertedId) {
         toast.success(`${data.name} is added in package`);
-        navigate('/allPackages')
+        navigate("/allPackages");
         reset();
       }
     });
@@ -173,6 +173,25 @@ const AddPackage = () => {
               className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
             {errors.image1 && (
+              <span className="text-sm text-red-600 font-semibold">
+                Fill This Field
+              </span>
+            )}
+          </div>
+          <div>
+            <label
+              htmlFor="duration"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Duration
+            </label>
+            <input
+              type="text"
+              id="duration"
+              {...register("duration", { required: true })}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+            {errors.duration && (
               <span className="text-sm text-red-600 font-semibold">
                 Fill This Field
               </span>
@@ -306,25 +325,6 @@ const AddPackage = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.activities4 && (
-              <span className="text-sm text-red-600 font-semibold">
-                Fill This Field
-              </span>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="duration"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Duration
-            </label>
-            <input
-              type="text"
-              id="duration"
-              {...register("duration", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-            {errors.duration && (
               <span className="text-sm text-red-600 font-semibold">
                 Fill This Field
               </span>

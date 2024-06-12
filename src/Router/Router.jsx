@@ -147,6 +147,7 @@ const router = createBrowserRouter([
             <ManageUser />
           </AdminRoute>
         ),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/usersCount`),
       },
       {
         path: "addPackage",

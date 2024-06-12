@@ -35,7 +35,7 @@ const Bookings = () => {
         const discountPrice = totalPrice - (totalPrice * 25) / 100;
         setCost(discountPrice);
         refetch();
-        console.log(totalPrice);
+        // console.log(totalPrice);
         Swal.fire({
           title: "Discount Granted",
           icon: "success",
