@@ -24,6 +24,7 @@ import AllGuides from "../pages/common/AllGuides";
 import Contact from "../pages/common/Contact";
 import Blog from "../pages/common/Blog";
 import AboutUs from "../pages/common/AboutUs";
+import TripTypePackage from "../pages/common/TripTypePackage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blog />,
+      },
+      {
+        path: "/tripType/:type",
+        element: <TripTypePackage />,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/packages`),
       },
       {
         path: "/allStories",
@@ -92,7 +98,8 @@ const router = createBrowserRouter([
             <GuideDetails />
           </SecureRoute>
         ),
-        loader: () => fetch(`${import.meta.env.VITE_API_URL}/guides?role=guide`),
+        loader: () =>
+          fetch(`${import.meta.env.VITE_API_URL}/guides?role=guide`),
       },
     ],
   },
