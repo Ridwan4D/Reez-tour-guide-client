@@ -25,6 +25,7 @@ import Contact from "../pages/common/Contact";
 import Blog from "../pages/common/Blog";
 import AboutUs from "../pages/common/AboutUs";
 import TripTypePackage from "../pages/common/TripTypePackage";
+import UpdatePackage from "../pages/admin/UpdatePackage";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +80,15 @@ const router = createBrowserRouter([
           <SecureRoute>
             <Details />
           </SecureRoute>
+        ),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/packages`),
+      },
+      {
+        path: "/updatePackage/:id",
+        element: (
+          <AdminRoute>
+            <UpdatePackage />
+          </AdminRoute>
         ),
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/packages`),
       },
