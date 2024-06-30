@@ -8,6 +8,11 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useWishlist from "../hooks/useWishlist";
 import Swal from "sweetalert2";
+import useUsers from "../hooks/useUsers";
+
+// =============================================
+//  Todo: create update page and add functionality
+// =============================================
 
 const PackageCard = ({ pack }) => {
   const axiosSecure = useAxiosSecure();
@@ -16,6 +21,10 @@ const PackageCard = ({ pack }) => {
   const [, refetch] = useWishlist();
   const navigate = useNavigate();
   const location = useLocation();
+  const [users] = useUsers();
+  const roleUser = users.find((findUser) => findUser.userEmail === user.email);
+  const role = roleUser?.role;
+  // console.log(role);
 
   const handleAddWishlist = () => {
     if (user && user.email) {
@@ -77,14 +86,27 @@ const PackageCard = ({ pack }) => {
         <p className="font-semibold">
           <span className="text-lg text-gray-500">Price: </span>${price}
         </p>
-        <Link
-          to={`/details/${_id}`}
-          className="inline-block rounded bg-[#10b981] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-          data-twe-ripple-init
-          data-twe-ripple-color="light"
-        >
-          View Package
-        </Link>
+        <div className="flex justify-between">
+          <Link
+            to={`/details/${_id}`}
+            className="inline-block rounded bg-[#10b981] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+            data-twe-ripple-init
+            data-twe-ripple-color="light"
+          >
+            View Package
+          </Link>
+
+          {role === "admin" && (
+            <Link
+              to={`/details/${_id}`}
+              className="inline-block rounded bg-[#10b981] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+              data-twe-ripple-init
+              data-twe-ripple-color="light"
+            >
+              Update Package
+            </Link>
+          )}
+        </div>
       </div>
       <Tooltip id="my-tooltip" />
     </div>

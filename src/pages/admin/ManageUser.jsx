@@ -5,26 +5,26 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { TbArrowGuide } from "react-icons/tb";
-// import useUser from "../../hooks/useUser";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
-import useUsers from "../../hooks/useUsers";
 import { FcCancel } from "react-icons/fc";
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import useUsers from "../../hooks/useUsers";
 
 const ManageUser = () => {
   const { count } = useLoaderData();
+  const [users]= useUsers();
   const itemPerPage = 10;
   const numberOfPages = Math.ceil(count / itemPerPage);
   const pages = [...Array(numberOfPages).keys()];
   const [currentPage, setCurrentPage] = useState(0);
-  console.log(pages);
-  console.log(count);
+  // console.log(pages);
+  // console.log(count);
   const axiosSecure = useAxiosSecure();
   // const [users, refetch] = useUsers();
-  const { data: users = [], refetch } = useQuery({
+  const { data: allUsers = [], refetch } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -76,8 +76,9 @@ const ManageUser = () => {
     <div>
       <SectionTitle heading={"MANAGE ALL USERS"} subHeading={"How many??"} />
       <div className="bg-white max-w-6xl mx-auto px-12 py-10 mb-20">
-        <div className="font-cinzel font-bold mb-10">
+        <div className="font-cinzel font-bold mb-10 space-y-2 md:flex justify-between items-center">
           <h2 className="text-3xl">Total User: {users.length}</h2>
+          <h2 className="text-3xl">In This Page User: {allUsers.length}</h2>
         </div>
         <div>
           <div className="overflow-x-auto rounded-t-xl">
@@ -95,7 +96,7 @@ const ManageUser = () => {
               </thead>
               <tbody>
                 {/* row 1 */}
-                {users?.map((user, idx) => (
+                {allUsers?.map((user, idx) => (
                   <tr key={idx} className="font-inter">
                     <th className="text-center font-bold">{idx + 1}</th>
                     <td className="text-center">{user.userName}</td>
