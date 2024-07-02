@@ -1,5 +1,6 @@
 # React + Vite
 
+## About the project
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 This is tour guide based website. A user can see the packages which is added by an admin. If the user want he/she can add this in his wish list. If he setisfied by the offer he can book the selected package. User can see his wistlist and booking list.If he/she felt any thing wrong he/she can delete the package from their wishlist before booking
 
