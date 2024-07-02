@@ -1,14 +1,7 @@
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-Admin:hashim@amla.com
-Pass: 123456789
+This is tour guide based website. A user can see the packages which is added by an admin. If the user want he/she can add this in his wish list. If he setisfied by the offer he can book the selected package. User can see his wistlist and booking list.If he/she felt any thing wrong he/she can delete the package from their wishlist before booking
 
 ## Usage
 - React-tooltip
@@ -30,6 +23,12 @@ Pass: 123456789
 - It also has a guide and use dashboard
 - User will have their bookings and wish list
 - Slider with valuable information
+
+## If you want to run this project in your device
+- clone the repo.
+- also clone the backend repo.
+- download node modules.
+- and run it.
 
 
 
