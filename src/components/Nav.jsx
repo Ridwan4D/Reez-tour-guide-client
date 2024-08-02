@@ -1,20 +1,28 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 
 const Nav = () => {
-  const { user,logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const handleLogout = ()=>{
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
     logout();
-    navigate("/login")
-  }
+    navigate("/login");
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   const navLinks = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/community">Community</NavLink>
+        <NavLink to="/allPackages">Packages</NavLink>
       </li>
       <li>
         <NavLink to="/blogs">Blogs</NavLink>
@@ -26,32 +34,38 @@ const Nav = () => {
         <NavLink to="/contact">Contact Us</NavLink>
       </li>
       {user ? (
-        <li>
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src={user.photoURL}
-                />
-              </div>
+        <li className="relative">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+            onClick={toggleDropdown}
+          >
+            <div className="w-10 rounded-full">
+              <img
+                alt="User Avatar"
+                src={user.photoURL}
+              />
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 bg-black/50"
-            >
-              <li>
-                <button onClick={handleLogout}>Logout</button>
-              </li>
-              <li>
-                <Link to="/dashboard">Dashboard</Link>
-              </li>
-            </ul>
           </div>
+          <ul
+            tabIndex={0}
+            className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 bg-slate-700 text-white ${isDropdownOpen ? "block" : "hidden"
+              } lg:absolute lg:right-0 lg:mt-0 lg:bg-black/50`}
+            style={{
+              position: isDropdownOpen && window.innerWidth < 1024 ? "fixed" : "absolute",
+              top: isDropdownOpen && window.innerWidth < 1024 ? "50%" : "auto",
+              left: isDropdownOpen && window.innerWidth < 1024 ? "50%" : "auto",
+              transform: isDropdownOpen && window.innerWidth < 1024 ? "translate(-50%, -50%)" : "none"
+            }}
+          >
+            <li>
+              <button onClick={handleLogout}>Logout</button>
+            </li>
+            <li>
+              <Link to="/dashboard/profile">Dashboard</Link>
+            </li>
+          </ul>
         </li>
       ) : (
         <li>
@@ -60,6 +74,7 @@ const Nav = () => {
       )}
     </>
   );
+
   return (
     <div className="navbar bg-[#10b981] md:flex justify-between mb-10" id="navbar">
       <div className="navbar-start w-full lg:w-auto flex-row-reverse justify-between">
@@ -88,8 +103,8 @@ const Nav = () => {
           </ul>
         </div>
         <div className="flex space-x-1">
-          <img src="logo-white.png" alt="" width="50" />
-          <a href="#" className="text-xl font-bold">
+          <img src="logo-white.png" alt="Logo" width="50" />
+          <a href="/" className="text-xl font-bold">
             Reez <br />
             Tour Guide
           </a>

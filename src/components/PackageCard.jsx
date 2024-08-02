@@ -61,7 +61,9 @@ const PackageCard = ({ pack }) => {
     }
   };
   return (
-    <div className="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark border-2 p-5">
+    <Link
+      to={`/details/${_id}`}
+      className="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark border-2 p-5 hover:scale-105 transition-all">
       <div
         className="relative bg-cover bg-no-repeat mb-3"
         data-twe-ripple-init
@@ -86,15 +88,7 @@ const PackageCard = ({ pack }) => {
         <p className="font-semibold">
           <span className="text-lg text-gray-500">Price: </span>${price}
         </p>
-        <div className="flex justify-between">
-          <Link
-            to={`/details/${_id}`}
-            className="inline-block rounded bg-[#10b981] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-            data-twe-ripple-init
-            data-twe-ripple-color="light"
-          >
-            View Package
-          </Link>
+        <div className="">
 
           {role === "admin" && (
             <Link
@@ -109,7 +103,7 @@ const PackageCard = ({ pack }) => {
         </div>
       </div>
       <Tooltip id="my-tooltip" />
-    </div>
+    </Link>
   );
 };
 PackageCard.propTypes = {

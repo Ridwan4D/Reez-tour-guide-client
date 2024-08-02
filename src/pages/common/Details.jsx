@@ -24,7 +24,7 @@ const Details = () => {
       <div className="md:flex md:mb-20 md:space-x-6">
         <div className="flex-1 md:space-y-4">
           <div className="md:p-7 border-2 rounded-sm">
-            <img src={image_1} alt="" className="w-auto" />
+            <img src={image_1} alt="" className="w-full" />
           </div>
           <div className="md:flex space-x-5">
             <div>
