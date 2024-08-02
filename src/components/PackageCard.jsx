@@ -22,11 +22,16 @@ const PackageCard = ({ pack }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [users] = useUsers();
+  const [wishList] = useWishlist();
   const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
+  const wishId = wishList.find((findId) => findId.wishId === _id)
   const role = roleUser?.role;
-  // console.log(role);
+  // console.log(wishId?.wishId);
 
   const handleAddWishlist = () => {
+    if (wishId?.wishId === _id) {
+      return toast.error("Package already added")
+    }
     if (user && user.email) {
       const wishItem = {
         wishId: _id,
@@ -40,30 +45,34 @@ const PackageCard = ({ pack }) => {
         if (res.data.insertedId) {
           toast.success(`${tour_name}  added to wishList`);
           refetch();
-        } else {
-          Swal.fire({
-            title: "You are not logged in!",
-            text: "Please login to add to the cart.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Login",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              setTimeout(() => {
-                navigate("/login", location?.state);
-              }, 1000);
-            }
-          });
+          setTimeout(() => {
+            navigate("/dashboard/wishList");
+          }, 1000);
         }
-      });
+      })
+        .catch(err => {
+          console.log(err.message);
+        })
+    } else {
+      Swal.fire({
+        title: "You are not logged in!",
+        text: "Please login to add to the cart.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setTimeout(() => {
+            navigate("/login", location?.state);
+          }, 1000);
+        }
+      })
     }
   };
   return (
-    <Link
-      to={`/details/${_id}`}
-      className="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark border-2 p-5 hover:scale-105 transition-all">
+    <div className="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark border-2 p-5">
       <div
         className="relative bg-cover bg-no-repeat mb-3"
         data-twe-ripple-init
@@ -88,7 +97,15 @@ const PackageCard = ({ pack }) => {
         <p className="font-semibold">
           <span className="text-lg text-gray-500">Price: </span>${price}
         </p>
-        <div className="">
+        <div className="flex justify-between">
+          <Link
+            to={`/details/${_id}`}
+            className="inline-block rounded bg-[#10b981] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+            data-twe-ripple-init
+            data-twe-ripple-color="light"
+          >
+            View Package
+          </Link>
 
           {role === "admin" && (
             <Link
@@ -103,7 +120,7 @@ const PackageCard = ({ pack }) => {
         </div>
       </div>
       <Tooltip id="my-tooltip" />
-    </Link>
+    </div>
   );
 };
 PackageCard.propTypes = {

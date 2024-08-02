@@ -1,13 +1,20 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import TourPlan from "../../components/TourPlan";
 import TourBookingForm from "../../components/TourBookingForm";
+import useAuth from "../../hooks/useAuth";
+import useUsers from "../../hooks/useUsers";
 
 const Details = () => {
   const packages = useLoaderData();
   const { id } = useParams();
   const packageDetail = packages.find((pack) => pack._id == id);
+  const { user } = useAuth();
+  const [users] = useUsers();
+  const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
+  const role = roleUser?.role;
   // console.log(id, packageDetail);
   const {
+    _id,
     image_1,
     image_2,
     image_3,
@@ -21,6 +28,18 @@ const Details = () => {
   } = packageDetail;
   return (
     <div>
+      {role === "admin" && (
+        <div className="bg-slate-500 py-3 flex justify-between items-center text-white px-10">
+          <h3 className="text-2xl">{tour_name}</h3>
+          <Link
+            to={`/updatePackage/${_id}`}
+            className="btn bg-[#10b981] border-0 rounded-sm text-white font-semibold"
+          >
+            Update Package
+          </Link>
+        </div>
+      )}
+
       <div className="md:flex md:mb-20 md:space-x-6">
         <div className="flex-1 md:space-y-4">
           <div className="md:p-7 border-2 rounded-sm">
@@ -85,7 +104,7 @@ const Details = () => {
       </div>
       {/* tour guides */}
       {/* booking form */}
-      <TourBookingForm tourName={tour_name} tourPrice={price}/>
+      <TourBookingForm tourName={tour_name} tourPrice={price} />
     </div>
   );
 };
