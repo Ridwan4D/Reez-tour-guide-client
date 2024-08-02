@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { FaClipboardList } from "react-icons/fa";
 import { FaCodePullRequest } from "react-icons/fa6";
@@ -7,6 +8,7 @@ import {
   MdAssignmentTurnedIn,
   MdEditCalendar,
   MdOutlineLogout,
+  MdMenu,
 } from "react-icons/md";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -18,8 +20,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const [isAdmin] = useAdmin();
   const [isGuide] = useGuide();
-  // console.log(isAdmin);
-  // console.log(isGuide);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -27,13 +28,25 @@ const DashboardLayout = () => {
       navigate("/login");
     }, 500);
   };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
+      <div className="md:hidden flex justify-between items-center bg-[#10b981] p-4">
+        <h1 className="text-white text-lg">Dashboard</h1>
+        <button onClick={toggleSidebar}>
+          <MdMenu className="text-white text-2xl" />
+        </button>
+      </div>
       <div
-        className="w-1/4 md:w-auto md:min-h-screen bg-[#10b981]"
+        className={`fixed inset-y-0 left-0 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:relative md:translate-x-0 md:w-auto md:min-h-screen bg-[#10b981] transition-transform duration-300 ease-in-out z-50`}
         id="sideBar"
       >
-        <ul className="menu p-0 md:p-4 font-medium text-[#151515] font-cinzel text-xs md:text-lg space-y-1">
+        <ul className="menu p-4 font-medium text-[#151515] font-cinzel text-xs md:text-lg space-y-1">
           <li>
             <NavLink to="/dashboard/profile" className="p-0 pt-1">
               <CgProfile />
@@ -82,7 +95,7 @@ const DashboardLayout = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/requestAdmin" className="p-0 pt-1" >
+                <NavLink to="/dashboard/requestAdmin" className="p-0 pt-1">
                   <FaCodePullRequest />
                   Request to Admin
                 </NavLink>
@@ -90,10 +103,12 @@ const DashboardLayout = () => {
             </>
           )}
 
-          {/* sheared item for all */}
+          {/* shared item for all */}
           <hr className="border mt-10" />
           <li>
-            <NavLink to="/" className="p-0 pt-1">Home</NavLink>
+            <NavLink to="/" className="p-0 pt-1">
+              Home
+            </NavLink>
           </li>
           <li>
             <button onClick={handleLogout} className="p-0 pt-1">

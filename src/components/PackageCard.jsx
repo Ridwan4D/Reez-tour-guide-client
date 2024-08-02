@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import useUsers from "../hooks/useUsers";
 
 // =============================================
-//  Todo: create update page and add functionality
+
 // =============================================
 
 const PackageCard = ({ pack }) => {
@@ -22,7 +22,7 @@ const PackageCard = ({ pack }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [users] = useUsers();
-  const roleUser = users.find((findUser) => findUser.userEmail === user.email);
+  const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
   const role = roleUser?.role;
   // console.log(role);
 

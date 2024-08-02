@@ -1,5 +1,4 @@
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -8,15 +7,10 @@ const UpdatePackage = () => {
   const packages = useLoaderData();
   const { id } = useParams();
   const pack = packages.find((item) => item._id === id);
-  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   console.log(pack);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   // const info = {tour_name,description,trip_type,price,image_1,image_2,image_3,image_4,duration,activities1,activities2,activities3,activities4}
   const onSubmit = async (data) => {
     const tour_plan = [
@@ -47,8 +41,8 @@ const UpdatePackage = () => {
       tour_plan,
     };
     axiosSecure.put(`/packages/${id}`, packageInfo).then((res) => {
-      if (res.data.insertedId) {
-        toast.success(`${data.name} is added in package`);
+      if (res.data.modifiedCount) {
+        toast.success(`${data.name} is updated`);
         navigate(`/details/${id}`);
       }
     });
