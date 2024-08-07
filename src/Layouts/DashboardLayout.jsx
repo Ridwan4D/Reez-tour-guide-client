@@ -34,7 +34,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row p-2">
       <div className="md:hidden flex justify-between items-center bg-[#10b981] p-4">
         <h1 className="text-white text-lg">Dashboard</h1>
         <button onClick={toggleSidebar}>

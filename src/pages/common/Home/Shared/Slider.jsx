@@ -1,20 +1,48 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
 const Slider = () => {
+  const slideImages = [
+    {
+      img: "https://i.ibb.co/CM4vBg6/summer-offer.jpg"
+    },
+    {
+      img: "https://i.ibb.co/P6HjcKF/190807dipromobanner.jpg"
+    },
+    {
+      img: "https://i.ibb.co/YfrvXpk/images-3.jpg"
+    }
+  ]
   return (
-    <div>
-      <Carousel>
-        <div>
-          <img src="https://i.ibb.co/CM4vBg6/summer-offer.jpg" className="w-full max-h-[500px] h-[40vh] md:h-auto" />
-        </div>
-        <div>
-          <img src="https://i.ibb.co/P6HjcKF/190807dipromobanner.jpg" className="w-full max-h-[500px] h-[40vh] md:h-auto" />
-        </div>
-        <div>
-          <img src="https://i.ibb.co/YfrvXpk/images-3.jpg" className="w-full max-h-[500px] h-[40vh] md:h-auto" />
-        </div>
-      </Carousel>
-    </div>
+    <>
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={30}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        //   navigation={true}
+        modules={[Autoplay, Pagination, Navigation]}
+        className="mySwiper">
+        {
+          slideImages.map((slide, idx) => (
+            <SwiperSlide key={idx}>
+              <img
+                src={slide.img}
+                alt={`slide ${idx + 1}`}
+                className="w-full max-h-[500px] h-[40vh] md:h-auto"
+              />
+            </SwiperSlide>
+          ))
+        }
+
+      </Swiper>
+    </>
   );
 };
 

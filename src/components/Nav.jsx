@@ -1,6 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
+import siteLogo from "../assets/logo-white.png"
 
 const Nav = () => {
   const { user, logout } = useAuth();
@@ -103,7 +104,7 @@ const Nav = () => {
           </ul>
         </div>
         <div className="flex space-x-1">
-          <img src="logo-white.png" alt="Logo" width="50" />
+          <img src={siteLogo} alt="Logo" width="50" />
           <a href="/" className="text-xl font-bold">
             Reez <br />
             Tour Guide

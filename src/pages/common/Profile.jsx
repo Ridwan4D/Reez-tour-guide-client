@@ -60,11 +60,11 @@ const Profile = () => {
                 {role?.role == "guide" || role?.role == "admin" ? (
                   <span>{role?.phone}</span>
                 ) : (
-                  "015XXXXXXXXX"
+                  "01XXXXXXXXXX"
                 )}
               </div>
 
-              {role?.role == "guide" || role?.role == "admin"  && (
+              {role?.role == "guide" || role?.role == "admin" && (
                 <div>
                   <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
                     <p className="h-4 text-green-700 pr-4">
@@ -74,13 +74,13 @@ const Profile = () => {
                   </div>
                   <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
                     <p className="h-4 text-green-700 pr-4">
-                    <SiSkillshare />
+                      <SiSkillshare />
                     </p>
                     {role?.skill}
                   </div>
                   <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
                     <p className="h-4 text-green-700 pr-4">
-                    <AiOutlineNodeExpand />
+                      <AiOutlineNodeExpand />
                     </p>
                     {role?.experience}
                   </div>
