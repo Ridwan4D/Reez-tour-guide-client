@@ -15,24 +15,22 @@ import useUsers from "../../hooks/useUsers";
 
 const ManageUser = () => {
   const { count } = useLoaderData();
-  const [users]= useUsers();
+  const [users] = useUsers();
   const itemPerPage = 10;
   const numberOfPages = Math.ceil(count / itemPerPage);
   const pages = [...Array(numberOfPages).keys()];
   const [currentPage, setCurrentPage] = useState(0);
-  // console.log(pages);
-  // console.log(count);
+
   const axiosSecure = useAxiosSecure();
-  // const [users, refetch] = useUsers();
+
   const { data: allUsers = [], refetch } = useQuery({
-    queryKey: ["allUsers"],
+    queryKey: ["allUsers", currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/users?page=${currentPage}&size=${itemPerPage}`
-      );
+      const res = await axiosSecure.get(`/users?page=${currentPage}&size=${itemPerPage}`);
       return res.data;
     },
   });
+
   const handleDeleteUser = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -45,63 +43,71 @@ const ManageUser = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/users/${id}`).then((res) => {
-          // console.log(res.data);
           if (res.data.deletedCount) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            refetch();
           }
-          refetch();
         });
       }
     });
   };
+
   const handleRole = (user, role, requested) => {
     const userInfo = { role, requested };
     axiosSecure.put(`/users/admin/${user._id}`, userInfo).then((res) => {
-      // console.log(res.data);
       if (res.data.modifiedCount) {
         refetch();
-        if (role == "user") {
+        if (role === "user") {
           toast.dismiss(`${user.userName}'s request is canceled`);
         } else {
-          toast.success(`${user.userName} is ${role} Now`);
+          toast.success(`${user.userName} is now ${role}`);
         }
       }
     });
   };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage((prev) => prev - 1);
+      refetch();
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < numberOfPages - 1) {
+      setCurrentPage((prev) => prev + 1);
+      refetch();
+    }
+  };
+
   return (
     <div>
       <SectionTitle heading={"MANAGE ALL USERS"} subHeading={"How many??"} />
-      <div className="bg-white max-w-6xl mx-auto px-12 py-10 mb-20">
+      <div className="bg-white max-w-6xl mx-auto px-2 md:px-12 py-10 mb-20">
         <div className="font-cinzel font-bold mb-10 space-y-2 md:flex justify-between items-center">
-          <h2 className="text-3xl">Total User: {users.length}</h2>
-          <h2 className="text-3xl">In This Page User: {allUsers.length}</h2>
+          <h2 className="text-lg md:text-3xl">Total User: {users.length}</h2>
+          <h2 className="text-lg md:text-3xl">In This Page User: {allUsers.length}</h2>
         </div>
         <div>
           <div className="overflow-x-auto rounded-t-xl">
             <table className="table">
-              {/* head */}
               <thead className="uppercase text-white font-bold">
                 <tr className="bg-[#10b981]">
-                  <th className="text-center text-xl">#</th>
-                  <th className="py-5 text-center">Name</th>
-                  <th className="text-center">email</th>
-                  <th className="text-center">role</th>
-                  <th className="text-center">manage</th>
-                  <th className="text-center">action</th>
+                  <th className="text-center text-sm md:text-xl">#</th>
+                  <th className="py-2 md:py-5 text-center text-sm md:text-lg">Name</th>
+                  <th className="text-center text-sm md:text-lg">Email</th>
+                  <th className="text-center text-sm md:text-lg">Role</th>
+                  <th className="text-center text-sm md:text-lg">Manage</th>
+                  <th className="text-center text-sm md:text-lg">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                {allUsers?.map((user, idx) => (
-                  <tr key={idx} className="font-inter">
-                    <th className="text-center font-bold">{idx + 1}</th>
-                    <td className="text-center">{user.userName}</td>
-                    <td className="text-center">{user.userEmail}</td>
-                    <td className="text-center">
+                {allUsers.map((user, idx) => (
+                  <tr key={user._id} className="font-inter">
+                    <th className="text-center font-bold text-sm md:text-xl">{idx + 1}</th>
+                    <td className="text-center text-xs md:text-lg">{user.userName}</td>
+                    <td className="text-center text-xs md:text-lg">{user.userEmail}</td>
+                    <td className="text-center text-xs md:text-lg">
                       {user.role} {user.requested && <span>(requested)</span>}
                     </td>
                     <td className="text-center">
@@ -115,7 +121,7 @@ const ManageUser = () => {
                                 data-tooltip-id="makeAdmin"
                                 data-tooltip-content="Make Admin"
                                 onClick={() => handleRole(user, "admin", false)}
-                                className="btn bg-[#10b981] text-white text-lg"
+                                className="btn bg-[#10b981] text-white text-sm md:text-lg"
                               >
                                 <MdAdminPanelSettings />
                               </button>
@@ -123,18 +129,16 @@ const ManageUser = () => {
                                 data-tooltip-id="makeGuide"
                                 data-tooltip-content="Make Guide"
                                 onClick={() => handleRole(user, "guide", false)}
-                                className="btn bg-[#10b981] text-white text-lg"
+                                className="btn bg-[#10b981] text-white text-sm md:text-lg"
                               >
                                 <TbArrowGuide />
                               </button>
                               {user.requested && (
                                 <button
-                                  data-tooltip-id="makeGuide"
-                                  data-tooltip-content="Make Guide"
-                                  onClick={() =>
-                                    handleRole(user, "user", false)
-                                  }
-                                  className="btn bg-[#10b981] text-white text-lg"
+                                  data-tooltip-id="cancelRequest"
+                                  data-tooltip-content="Cancel Request"
+                                  onClick={() => handleRole(user, "user", false)}
+                                  className="btn bg-[#10b981] text-white text-sm md:text-lg"
                                 >
                                   <FcCancel />
                                 </button>
@@ -146,10 +150,8 @@ const ManageUser = () => {
                                 <button
                                   data-tooltip-id="makeAdmin"
                                   data-tooltip-content="Make Admin"
-                                  onClick={() =>
-                                    handleRole(user, "admin", false)
-                                  }
-                                  className="btn bg-[#10b981] text-white text-lg"
+                                  onClick={() => handleRole(user, "admin", false)}
+                                  className="btn bg-[#10b981] text-white text-sm md:text-lg"
                                 >
                                   <MdAdminPanelSettings />
                                 </button>
@@ -162,7 +164,7 @@ const ManageUser = () => {
                     <th className="text-center">
                       <button
                         onClick={() => handleDeleteUser(user._id)}
-                        className="btn bg-[#B91C1C] text-white"
+                        className="btn bg-[#B91C1C] text-white text-sm md:text-lg"
                       >
                         <FaRegTrashAlt />
                       </button>
@@ -175,22 +177,35 @@ const ManageUser = () => {
         </div>
         <Tooltip id="makeAdmin" />
         <Tooltip id="makeGuide" />
+        <Tooltip id="cancelRequest" />
       </div>
       <div className="max-w-5xl mx-auto my-7 text-center space-x-2">
+        <button
+          className={`btn bg-[#10b981] text-white text-sm md:text-lg`}
+          onClick={goToPreviousPage}
+          disabled={currentPage === 0}
+        >
+          Previous
+        </button>
         {pages.map((page) => (
           <button
             key={page}
-            className={`btn bg-[#10b981] text-white ${
-              currentPage === page && "selected"
-            }`}
+            className={`btn bg-[#10b981] text-white text-sm md:text-lg ${currentPage === page && "selected"}`}
             onClick={() => {
-              refetch();
               setCurrentPage(page);
+              refetch();
             }}
           >
             {page + 1}
           </button>
         ))}
+        <button
+          className={`btn bg-[#10b981] text-white text-sm md:text-lg`}
+          onClick={goToNextPage}
+          disabled={currentPage === numberOfPages - 1}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
