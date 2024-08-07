@@ -1,24 +1,18 @@
 import SectionTitle from "../../../components/SectionTitle";
-import { motion } from "framer-motion";
-import { fadeIn } from "../../../utils/varient";
 import usePackage from "../../../hooks/usePackage";
 import { Link } from "react-router-dom";
 
 const TourTypeSection = () => {
   const [packages] = usePackage();
+
   return (
-    <motion.div
-      variants={fadeIn("up", 0.2)}
-      initial="hidden"
-      whileInView={"show"}
-      viewport={{ once: false, amount: 0.7 }}
-    >
+    <div>
       <SectionTitle
         heading="Tour Type Section"
         subHeading="Choose Your Favorite Type"
       />
       <div>
-        <div className=" flex overflow-x-auto gap-x-5">
+        <div className="flex overflow-x-auto gap-x-5">
           {packages.map((pack, idx) => (
             <Link
               key={idx}
@@ -34,7 +28,7 @@ const TourTypeSection = () => {
           ))}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

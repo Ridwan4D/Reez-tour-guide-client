@@ -6,7 +6,7 @@ import TourTypeSection from "./TourTypeSection";
 
 const Home = () => {
   return (
-    <div className="space-y-20">
+    <div className="space-y-10">
       <Helmet>
         <title>Home | Reez Tour Guide</title>
       </Helmet>

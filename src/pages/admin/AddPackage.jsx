@@ -98,14 +98,14 @@ const AddPackage = () => {
       />
 
       <form
-        className="max-w-5xl mx-auto border-2 border-[#10b981] p-6"
+        className="max-w-5xl mx-auto border-2 border-[#10b981] p-2 md:p-6"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="grid gap-6 mb-6 md:grid-cols-2">
+        <div className="grid gap-x-6 gap-y-2 md:gap-y-3 mb-6 md:grid-cols-2">
           <div>
             <label
               htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Tour Name
             </label>
@@ -113,7 +113,7 @@ const AddPackage = () => {
               type="text"
               id="name"
               {...register("name", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.name && (
               <span className="text-sm text-red-600 font-semibold">
@@ -124,7 +124,7 @@ const AddPackage = () => {
           <div>
             <label
               htmlFor="type"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Type
             </label>
@@ -132,7 +132,7 @@ const AddPackage = () => {
               type="text"
               id="type"
               {...register("type", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.type && (
               <span className="text-sm text-red-600 font-semibold">
@@ -143,7 +143,7 @@ const AddPackage = () => {
           <div>
             <label
               htmlFor="price"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Price
             </label>
@@ -151,7 +151,7 @@ const AddPackage = () => {
               type="number"
               id="price"
               {...register("price", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.price && (
               <span className="text-sm text-red-600 font-semibold">
@@ -161,8 +161,8 @@ const AddPackage = () => {
           </div>
           <div>
             <label
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               htmlFor="file_input"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Image 1
             </label>
@@ -181,7 +181,7 @@ const AddPackage = () => {
           <div>
             <label
               htmlFor="duration"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Duration
             </label>
@@ -189,7 +189,7 @@ const AddPackage = () => {
               type="text"
               id="duration"
               {...register("duration", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.duration && (
               <span className="text-sm text-red-600 font-semibold">
@@ -199,8 +199,8 @@ const AddPackage = () => {
           </div>
           <div>
             <label
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               htmlFor="file_input"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Image 2
             </label>
@@ -218,8 +218,8 @@ const AddPackage = () => {
           </div>
           <div>
             <label
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               htmlFor="file_input"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Image 3
             </label>
@@ -237,8 +237,8 @@ const AddPackage = () => {
           </div>
           <div>
             <label
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               htmlFor="file_input"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Image 4
             </label>
@@ -257,7 +257,7 @@ const AddPackage = () => {
           <div>
             <label
               htmlFor="activities1"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Activities 1
             </label>
@@ -265,7 +265,7 @@ const AddPackage = () => {
               type="text"
               id="activities1"
               {...register("activities1", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.activities1 && (
               <span className="text-sm text-red-600 font-semibold">
@@ -276,7 +276,7 @@ const AddPackage = () => {
           <div>
             <label
               htmlFor="activities2"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Activities 2
             </label>
@@ -284,7 +284,7 @@ const AddPackage = () => {
               type="text"
               id="activities2"
               {...register("activities2", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.activities2 && (
               <span className="text-sm text-red-600 font-semibold">
@@ -295,7 +295,7 @@ const AddPackage = () => {
           <div>
             <label
               htmlFor="activities3"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Activities 3
             </label>
@@ -303,7 +303,7 @@ const AddPackage = () => {
               type="text"
               id="activities3"
               {...register("activities3", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.activities3 && (
               <span className="text-sm text-red-600 font-semibold">
@@ -314,7 +314,7 @@ const AddPackage = () => {
           <div>
             <label
               htmlFor="activities4"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
               Activities 4
             </label>
@@ -322,7 +322,7 @@ const AddPackage = () => {
               type="text"
               id="activities4"
               {...register("activities4", { required: true })}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.activities4 && (
               <span className="text-sm text-red-600 font-semibold">
@@ -342,7 +342,7 @@ const AddPackage = () => {
             type="text"
             id="description"
             {...register("description", { required: true })}
-            className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border w-full border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
           {errors.description && (
             <span className="text-sm text-red-600 font-semibold">
