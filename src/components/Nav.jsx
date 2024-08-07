@@ -1,12 +1,13 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
-import siteLogo from "../assets/logo-white.png"
+import siteLogo from "../assets/logo-white.png";
 
 const Nav = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -17,22 +18,30 @@ const Nav = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const closeMobileNav = () => {
+    setIsMobileNavOpen(false);
+  };
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
+  };
+
   const navLinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/" onClick={closeMobileNav}>Home</NavLink>
       </li>
       <li>
-        <NavLink to="/allPackages">Packages</NavLink>
+        <NavLink to="/allPackages" onClick={closeMobileNav}>Packages</NavLink>
       </li>
       <li>
-        <NavLink to="/blogs">Blogs</NavLink>
+        <NavLink to="/blogs" onClick={closeMobileNav}>Blogs</NavLink>
       </li>
       <li>
-        <NavLink to="/aboutUs">About Us</NavLink>
+        <NavLink to="/aboutUs" onClick={closeMobileNav}>About Us</NavLink>
       </li>
       <li>
-        <NavLink to="/contact">Contact Us</NavLink>
+        <NavLink to="/contact" onClick={closeMobileNav}>Contact Us</NavLink>
       </li>
       {user ? (
         <li className="relative">
@@ -64,13 +73,13 @@ const Nav = () => {
               <button onClick={handleLogout}>Logout</button>
             </li>
             <li>
-              <Link to="/dashboard/profile">Dashboard</Link>
+              <Link to="/dashboard/profile" onClick={closeMobileNav}>Dashboard</Link>
             </li>
           </ul>
         </li>
       ) : (
         <li>
-          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/login" onClick={closeMobileNav}>Login</NavLink>
         </li>
       )}
     </>
@@ -80,7 +89,7 @@ const Nav = () => {
     <div className="navbar bg-[#10b981] md:flex justify-between mb-10" id="navbar">
       <div className="navbar-start w-full lg:w-auto flex-row-reverse justify-between">
         <div className="dropdown dropdown-left">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" onClick={toggleMobileNav}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -98,7 +107,7 @@ const Nav = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className={`menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52 ${isMobileNavOpen ? "block" : "hidden"}`}
           >
             {navLinks}
           </ul>

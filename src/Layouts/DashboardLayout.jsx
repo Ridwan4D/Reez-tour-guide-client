@@ -33,6 +33,10 @@ const DashboardLayout = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="flex flex-col md:flex-row p-2">
       <div className="md:hidden flex justify-between items-center bg-[#10b981] p-4">
@@ -48,7 +52,7 @@ const DashboardLayout = () => {
       >
         <ul className="menu p-4 font-medium text-[#151515] font-cinzel text-xs md:text-lg space-y-1">
           <li>
-            <NavLink to="/dashboard/profile" className="p-0 pt-1">
+            <NavLink to="/dashboard/profile" className="p-0 pt-1" onClick={closeSidebar}>
               <CgProfile />
               My Profile
             </NavLink>
@@ -56,7 +60,7 @@ const DashboardLayout = () => {
           {isGuide && (
             <>
               <li>
-                <NavLink to="/dashboard/assignedTour" className="p-0 pt-1">
+                <NavLink to="/dashboard/assignedTour" className="p-0 pt-1" onClick={closeSidebar}>
                   <MdAssignmentTurnedIn />
                   My Assigned Tours
                 </NavLink>
@@ -66,13 +70,13 @@ const DashboardLayout = () => {
           {isAdmin && (
             <>
               <li>
-                <NavLink to="/dashboard/addPackage" className="p-0 pt-1">
+                <NavLink to="/dashboard/addPackage" className="p-0 pt-1" onClick={closeSidebar}>
                   <LuPackagePlus />
                   Add Package
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/manageUsers" className="p-0 pt-1">
+                <NavLink to="/dashboard/manageUsers" className="p-0 pt-1" onClick={closeSidebar}>
                   <HiUserGroup />
                   All users
                 </NavLink>
@@ -83,19 +87,19 @@ const DashboardLayout = () => {
           {!isAdmin && !isGuide && (
             <>
               <li>
-                <NavLink to="/dashboard/bookings" className="p-0 pt-1">
+                <NavLink to="/dashboard/bookings" className="p-0 pt-1" onClick={closeSidebar}>
                   <MdEditCalendar />
                   My Bookings
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/wishList" className="p-0 pt-1">
+                <NavLink to="/dashboard/wishList" className="p-0 pt-1" onClick={closeSidebar}>
                   <FaClipboardList />
                   My WishList
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/requestAdmin" className="p-0 pt-1">
+                <NavLink to="/dashboard/requestAdmin" className="p-0 pt-1" onClick={closeSidebar}>
                   <FaCodePullRequest />
                   Request to Admin
                 </NavLink>
@@ -106,12 +110,12 @@ const DashboardLayout = () => {
           {/* shared item for all */}
           <hr className="border mt-10" />
           <li>
-            <NavLink to="/" className="p-0 pt-1">
+            <NavLink to="/" className="p-0 pt-1" onClick={closeSidebar}>
               Home
             </NavLink>
           </li>
           <li>
-            <button onClick={handleLogout} className="p-0 pt-1">
+            <button onClick={() => { handleLogout(); closeSidebar(); }} className="p-0 pt-1">
               <MdOutlineLogout />
               Logout
             </button>
