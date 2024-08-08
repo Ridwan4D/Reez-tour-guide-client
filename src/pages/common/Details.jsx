@@ -104,7 +104,7 @@ const Details = () => {
       </div>
       {/* tour guides */}
       {/* booking form */}
-      <TourBookingForm tourName={tour_name} tourPrice={price} />
+      {role === "user" && <TourBookingForm tourName={tour_name} tourPrice={price} />}
     </div>
   );
 };

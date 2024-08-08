@@ -26,6 +26,7 @@ import Blog from "../pages/common/Blog";
 import AboutUs from "../pages/common/AboutUs";
 import TripTypePackage from "../pages/common/TripTypePackage";
 import UpdatePackage from "../pages/admin/UpdatePackage";
+import ManagePackages from "../pages/admin/ManagePackages";
 
 const router = createBrowserRouter([
   {
@@ -164,6 +165,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AddPackage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "managePackages",
+        element: (
+          <AdminRoute>
+            <ManagePackages />
           </AdminRoute>
         ),
       },

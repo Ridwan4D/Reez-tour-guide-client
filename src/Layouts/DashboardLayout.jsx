@@ -14,6 +14,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useAdmin from "../hooks/useAdmin";
 import useGuide from "../hooks/useGuide";
+import { TbPackages } from "react-icons/tb";
 
 const DashboardLayout = () => {
   const { logout } = useAuth();
@@ -38,7 +39,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row p-2">
+    <div className="flex flex-col md:flex-row p-2 md:p-0">
       <div className="md:hidden flex justify-between items-center bg-[#10b981] p-4">
         <h1 className="text-white text-lg">Dashboard</h1>
         <button onClick={toggleSidebar}>
@@ -78,7 +79,13 @@ const DashboardLayout = () => {
               <li>
                 <NavLink to="/dashboard/manageUsers" className="p-0 pt-1" onClick={closeSidebar}>
                   <HiUserGroup />
-                  All users
+                  Manage users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/managePackages" className="p-0 pt-1" onClick={closeSidebar}>
+                  <TbPackages />
+                  Manage Packages
                 </NavLink>
               </li>
             </>
