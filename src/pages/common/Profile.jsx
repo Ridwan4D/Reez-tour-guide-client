@@ -10,14 +10,18 @@ import { AiOutlineNodeExpand } from "react-icons/ai";
 const Profile = () => {
   const { user } = useAuth();
   const [users] = useUsers();
-  const role = users.find((role) => role.userEmail == user.email);
-  // console.log(role.role);
+  const role = users.find((role) => role.userEmail === user.email);
+
+  const handleUpdateUser = () => {
+    // Logic to handle user update goes here
+    console.log("Update User button clicked");
+  };
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <SectionTitle heading="See Your Profile" subHeading="My Profile" />
       <div className="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover">
-        <div className="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto mb-5 md:my-32 lg:my-0">
+        <div className="max-w-4xl flex flex-wrap items-center h-auto lg:h-screen mx-auto mb-5 md:my-32 lg:my-0">
           {/* <!--Main Col--> */}
           <div
             id="profile"
@@ -25,7 +29,14 @@ const Profile = () => {
           >
             <div className="p-4 md:p-12 text-center lg:text-left">
               {/* <!-- Image for mobile view--> */}
-
+              <div className="block lg:hidden">
+                <img
+                  src={user.photoURL}
+                  alt="User"
+                  className="rounded-full shadow-xl mx-auto mb-4"
+                  style={{ width: "150px", height: "150px" }}
+                />
+              </div>
               <h1 className="text-xl md:text-3xl font-bold pt-8 lg:pt-0">
                 {user.displayName}
               </h1>
@@ -57,14 +68,14 @@ const Profile = () => {
                 <p className="h-4 text-green-700 pr-4">
                   <FaPhoneAlt />
                 </p>
-                {role?.role == "guide" || role?.role == "admin" ? (
+                {role?.role === "guide" || role?.role === "admin" ? (
                   <span>{role?.phone}</span>
                 ) : (
                   "01XXXXXXXXXX"
                 )}
               </div>
 
-              {role?.role == "guide" || role?.role == "admin" && (
+              {(role?.role === "guide" || role?.role === "admin") && (
                 <div>
                   <div className="pt-2 text-gray-600 text-xs lg:text-sm flex items-center justify-center lg:justify-start">
                     <p className="h-4 text-green-700 pr-4">
@@ -86,19 +97,30 @@ const Profile = () => {
                   </div>
                 </div>
               )}
+
+              {/* Update User Button */}
+              <button
+                onClick={handleUpdateUser}
+                className="mt-6 px-6 py-2 text-white bg-green-600 rounded hover:bg-green-700 transition duration-200"
+              >
+                Update User
+              </button>
             </div>
           </div>
 
-          <div className="w-full lg:w-2/5">
+          {/* <!-- Image Col --> */}
+          <div className="w-full lg:w-2/5 hidden lg:block">
             <img
               src={user.photoURL}
-              className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+              alt="User"
+              className="rounded-lg shadow-2xl"
+              style={{ width: "100%", height: "auto", maxWidth: "300px" }}
             />
           </div>
         </div>
       </div>
-      <hr className="border border-dashed border-[#10b981]" />
-      {/* add this based on users role */}
+      <hr className="border border-dashed border-[#10b981] mt-8" />
+      {/* add this based on user's role */}
       {role?.role === "user" && <IfRoleUser />}
     </div>
   );

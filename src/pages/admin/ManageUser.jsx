@@ -12,6 +12,7 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useUsers from "../../hooks/useUsers";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 
 const ManageUser = () => {
   const { count } = useLoaderData();
@@ -179,18 +180,18 @@ const ManageUser = () => {
         <Tooltip id="makeGuide" />
         <Tooltip id="cancelRequest" />
       </div>
-      <div className="max-w-5xl mx-auto my-7 text-center space-x-2">
+      <div className="max-w-5xl mx-auto my-7 text-center space-x-2 flex items-center">
         <button
-          className={`btn bg-[#10b981] text-white text-sm md:text-lg`}
+          className={`bg-[#10b981] text-white text-xs md:text-sm px-2 h-7 rounded-sm`}
           onClick={goToPreviousPage}
           disabled={currentPage === 0}
         >
-          Previous
+          <GoArrowLeft />
         </button>
         {pages.map((page) => (
           <button
             key={page}
-            className={`btn bg-[#10b981] text-white text-sm md:text-lg ${currentPage === page && "selected"}`}
+            className={`bg-[#10b981] text-white text-xs md:text-sm px-2 h-7 rounded-sm ${currentPage === page && "selected"}`}
             onClick={() => {
               setCurrentPage(page);
               refetch();
@@ -200,11 +201,11 @@ const ManageUser = () => {
           </button>
         ))}
         <button
-          className={`btn bg-[#10b981] text-white text-sm md:text-lg`}
+          className={`bg-[#10b981] text-white text-xs md:text-sm px-2 h-7 rounded-sm`}
           onClick={goToNextPage}
           disabled={currentPage === numberOfPages - 1}
         >
-          Next
+          <GoArrowRight />
         </button>
       </div>
     </div>

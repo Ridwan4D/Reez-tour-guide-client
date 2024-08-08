@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 
 const TourTypeSection = () => {
   const [packages] = usePackage();
+  const uniqueTripTypes = [];
+
+  packages.forEach(pack => {
+    if (!uniqueTripTypes.find(item => item.trip_type === pack.trip_type)) {
+      uniqueTripTypes.push(pack);
+    }
+  });
 
   return (
     <div>
@@ -13,7 +20,7 @@ const TourTypeSection = () => {
       />
       <div>
         <div className="flex overflow-x-auto gap-x-5">
-          {packages.map((pack, idx) => (
+          {uniqueTripTypes.map((pack, idx) => (
             <Link
               key={idx}
               to={`/tripType/${pack.trip_type}`}
