@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import StoryCard from "../../components/StoryCard";
 import useStories from "../../hooks/useStories";
 
@@ -5,6 +6,9 @@ const AllStoriesPage = () => {
     const [stories] = useStories();
     return (
         <div>
+          <Helmet>
+        <title>Stories | Reez Tour Guide</title>
+      </Helmet>
       <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white text-center border-b-2 border-[#10b981] pb-2">
         All Story of{" "}
         <span className="text-[#10b981]">Reez Tour Guide Clients</span>

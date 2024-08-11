@@ -5,6 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const WishPage = () => {
   const [wishList, refetch] = useWishlist();
@@ -39,6 +40,9 @@ const WishPage = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Wishes | Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle
         heading={"Check Out Your Wish List"}
         subHeading={"My Wish List"}

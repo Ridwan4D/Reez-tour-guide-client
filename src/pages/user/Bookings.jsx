@@ -4,6 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const Bookings = () => {
   const { user } = useAuth();
@@ -71,6 +72,9 @@ const Bookings = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Bookings | Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle
         heading={"Check Out Your Wish List"}
         subHeading={"My Wish List"}

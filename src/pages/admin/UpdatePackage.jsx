@@ -2,6 +2,7 @@ import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const UpdatePackage = () => {
   const packages = useLoaderData();
@@ -49,6 +50,9 @@ const UpdatePackage = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Update {pack.tour_name} | Reez Tour Guide</title>
+      </Helmet>
       <h3 className="text-3xl font-semibold underline">Update Package</h3>
 
       <form

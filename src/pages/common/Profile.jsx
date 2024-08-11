@@ -6,6 +6,7 @@ import IfRoleUser from "../user/IfRoleUser";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import { SiSkillshare } from "react-icons/si";
 import { AiOutlineNodeExpand } from "react-icons/ai";
+import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -19,6 +20,9 @@ const Profile = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <Helmet>
+        <title>Profile | Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle heading="See Your Profile" subHeading="My Profile" />
       <div className="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover">
         <div className="max-w-4xl flex flex-wrap items-center h-auto lg:h-screen mx-auto mb-5 md:my-32 lg:my-0">

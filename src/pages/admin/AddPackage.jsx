@@ -4,6 +4,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -92,6 +93,9 @@ const AddPackage = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Add Package | Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle
         heading="Add New Package"
         subHeading="Write Package offer"

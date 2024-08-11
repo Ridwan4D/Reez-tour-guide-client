@@ -3,6 +3,7 @@ import TourPlan from "../../components/TourPlan";
 import TourBookingForm from "../../components/TourBookingForm";
 import useAuth from "../../hooks/useAuth";
 import useUsers from "../../hooks/useUsers";
+import { Helmet } from "react-helmet";
 
 const Details = () => {
   const packages = useLoaderData();
@@ -28,6 +29,9 @@ const Details = () => {
   } = packageDetail;
   return (
     <div>
+      <Helmet>
+        <title>Details of {tour_name} | Reez Tour Guide</title>
+      </Helmet>
       {role === "admin" && (
         <div className="bg-slate-500 py-3 flex justify-between items-center text-white px-10">
           <h3 className="text-2xl">{tour_name}</h3>

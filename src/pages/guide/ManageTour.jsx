@@ -3,6 +3,7 @@ import SectionTitle from "../../components/SectionTitle";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const ManageTour = () => {
   const { user } = useAuth();
@@ -27,6 +28,9 @@ const ManageTour = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Manage Tour| Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle
         heading={"Check Out Your Wish List"}
         subHeading={"My Wish List"}

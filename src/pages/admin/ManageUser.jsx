@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useUsers from "../../hooks/useUsers";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
+import { Helmet } from "react-helmet";
 
 const ManageUser = () => {
   const { count } = useLoaderData();
@@ -83,6 +84,9 @@ const ManageUser = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Manage User | Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle heading={"MANAGE ALL USERS"} subHeading={"How many??"} />
       <div className="bg-white max-w-6xl mx-auto px-2 md:px-12 py-10 mb-20">
         <div className="font-cinzel font-bold mb-10 space-y-2 md:flex justify-between items-center">

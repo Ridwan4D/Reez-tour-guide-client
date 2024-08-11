@@ -4,6 +4,7 @@ import SectionTitle from "../../components/SectionTitle";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import { SiSkillshare } from "react-icons/si";
 import { AiOutlineNodeExpand } from "react-icons/ai";
+import { Helmet } from "react-helmet";
 
 const GuideDetails = () => {
   const guides = useLoaderData();
@@ -12,6 +13,9 @@ const GuideDetails = () => {
   // console.log(guideDetail);
   return (
     <div>
+      <Helmet>
+        <title>Details of {guideDetail.userName} | Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle
         heading={`Meet With ${guideDetail.userName}`}
         subHeading={`Guide Profile`}

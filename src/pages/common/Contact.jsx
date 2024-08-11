@@ -4,19 +4,17 @@ const Contact = () => {
   return (
     <div>
       <Helmet>
-        <meta charSet="utf-8" />
         <title>Contact | Reez Tour Guide</title>
-        <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
-      <section className="py-6  bg-[linear-gradient(to_right,#10b891,#10b899,#10b891)] text-white">
+      <section className="md:py-6  bg-[linear-gradient(to_right,#10b891,#10b899,#10b891)] text-white">
         <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
-          <div className="py-6 md:py-0 md:px-6">
-            <h1 className="text-4xl font-bold">Get in touch</h1>
-            <p className="pt-2 pb-4">
+          <div className="pt-6 md:py-0 md:px-6">
+            <h1 className="text-2xl md:text-4xl font-bold">Get in touch</h1>
+            <p className="pt-2 pb-4 text-sm md:text-base">
               Fill in the form to start a conversation
             </p>
             <div className="space-y-4">
-              <p className="flex items-center">
+              <p className="flex items-center text-sm md:text-base">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -31,7 +29,7 @@ const Contact = () => {
                 </svg>
                 <span>Agrabad, Chattogram City</span>
               </p>
-              <p className="flex items-center">
+              <p className="flex items-center text-sm md:text-base">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -42,7 +40,7 @@ const Contact = () => {
                 </svg>
                 <span>+880 1567885468</span>
               </p>
-              <p className="flex items-center">
+              <p className="flex items-center text-sm md:text-base">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -57,38 +55,45 @@ const Contact = () => {
             </div>
           </div>
           <form
-            noValidate=""
-            className="flex flex-col py-6 space-y-6 md:py-0 md:px-6"
+            className="flex flex-col py-6 space-y-2 md:space-y-6 md:py-0 md:px-6"
           >
-            <label className="block">
-              <span className="mb-1">Full name</span>
+            <div>
+              <label className="block text-sm md:text-base">
+                Full name
+              </label>
               <input
                 type="text"
                 placeholder="Your Name"
-                className="block w-full rounded-sm py-1 px-4 focus:ring focus:ring-opacity-75 focus:dark:ring-default-600 bg-slate-700"
+                className="block w-full rounded-sm py-1 px-4 focus:ring focus:ring-opacity-75 focus:dark:ring-default-600 bg-slate-200"
               />
-            </label>
-            <label className="block">
-              <span className="mb-1">Email address</span>
+            </div>
+            <div>
+              <label className="block text-sm md:text-base">
+                Email address
+              </label>
               <input
                 type="email"
                 placeholder="email@gmail.com"
-                className="block w-full rounded-sm py-1 px-4 focus:ring focus:ring-opacity-75 focus:dark:ring-default-600 bg-slate-700"
+                className="block w-full rounded-sm py-1 px-4 focus:ring focus:ring-opacity-75 focus:dark:ring-default-600 bg-slate-200"
               />
-            </label>
-            <label className="block">
-              <span className="mb-1">Message</span>
+            </div>
+            <div>
+              <label className="block text-sm md:text-base">
+                Message
+              </label>
               <textarea
                 rows="3"
-                className="block w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-default-600 bg-slate-700"
+                className="block w-full rounded-md focus:ring focus:ring-opacity-75 focus:dark:ring-default-600 bg-slate-200"
               ></textarea>
-            </label>
-            <button
-              type="button"
-              className=" btn self-center px-8 py-3 text-lg bg-slate-950 border-0 text-gray-400 rounded active:ring hover:ring active:ring-opacity-75"
-            >
-              Submit
-            </button>
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="btn w-full self-center px-8 py-3 text-lg bg-slate-950 border-0 text-gray-400 rounded active:ring hover:ring active:ring-opacity-75"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </section>

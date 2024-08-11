@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="mt-20 md:mt-10">
-      <footer className="grid grid-cols-1 md:grid-cols-4 gap-y-10 px-3 md:p-10 bg-slate-900 text-white">
+    <div className="mt-4 md:mt-10">
+      <footer className="grid grid-cols-1 md:grid-cols-4 gap-y-3 md:gap-y-10 px-3 py-2 md:p-10 bg-slate-900 text-white">
         <nav className="flex flex-col">
           <h6 className="footer-title">Services</h6>
           <a className="link link-hover">Hotel</a>

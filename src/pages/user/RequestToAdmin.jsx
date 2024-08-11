@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useUsers from "../../hooks/useUsers";
+import { Helmet } from "react-helmet";
 
 const RequestToAdmin = () => {
   const { user } = useAuth();
@@ -36,6 +37,9 @@ const RequestToAdmin = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Send Request | Reez Tour Guide</title>
+      </Helmet>
       <SectionTitle heading="To Admin" subHeading="Become A Tour Guide" />
       <h3 className="text-base md:text-3xl font-semibold text-black mb-5">
         Provide Info For Request
