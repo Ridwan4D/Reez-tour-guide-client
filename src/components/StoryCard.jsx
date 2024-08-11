@@ -6,15 +6,15 @@ const StoryCard = ({ story }) => {
   return (
     <div>
       <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h3 className="mb-2 text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {tourName.slice(0, 10)}...{" "}
           <sub className="text-sm font-medium">with {guideName}</sub>
         </h3>
-        <h5 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h5 className="text-base md:text-xl font-semibold text-gray-900 dark:text-white">
           {tourType.slice(0, 20)}
         </h5>
         <p className="text-sm my-2">Visited No: {tourDate}</p>
-        <p className="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">
+        <p className="mb-3 text-xs md:text-sm font-normal text-gray-700 dark:text-gray-400">
           {description?.slice(0, 60)}....
         </p>
         <Link

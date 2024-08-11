@@ -86,7 +86,7 @@ const Nav = () => {
   );
 
   return (
-    <div className="navbar bg-[#10b981] md:flex justify-between mb-10" id="navbar">
+    <div className="navbar bg-[#10b981] md:flex justify-between md:mb-10" id="navbar">
       <div className="navbar-start w-full lg:w-auto flex-row-reverse justify-between">
         <div className="dropdown dropdown-left">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" onClick={toggleMobileNav}>
@@ -113,8 +113,8 @@ const Nav = () => {
           </ul>
         </div>
         <div className="flex space-x-1">
-          <img src={siteLogo} alt="Logo" width="50" />
-          <a href="/" className="text-xl font-bold">
+          <img src={siteLogo} alt="Logo" className="w-10 md:w-16" />
+          <a href="/" className="md:text-xl font-bold">
             Reez <br />
             Tour Guide
           </a>
