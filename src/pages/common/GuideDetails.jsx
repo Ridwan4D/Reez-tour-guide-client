@@ -9,12 +9,12 @@ const GuideDetails = () => {
   const guides = useLoaderData();
   const { id } = useParams();
   const guideDetail = guides.find((guide) => guide._id == id);
-  console.log(guideDetail);
+  // console.log(guideDetail);
   return (
     <div>
       <SectionTitle
         heading={`Meet With ${guideDetail.userName}`}
-        subHeading="My Profile"
+        subHeading={`Guide Profile`}
       />
       <div className="font-sans antialiased text-gray-900 leading-normal tracking-wider bg-cover">
         <div className="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto mb-5">

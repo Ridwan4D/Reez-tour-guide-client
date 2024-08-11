@@ -7,23 +7,23 @@ const Blog = () => {
             <title>Blog | Reez Tour Guide</title>
         </Helmet>
       <div className="flex flex-col">
-        <div className="bg-gray-100 py-8">
+        <div className="bg-gray-100 py-4 md:py-8">
           <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-800 md:mb-2">
               Latest Blogs Here
             </h1>
-            <p className="text-gray-600">Published on June 4, 2024</p>
+            <p className="text-sm md:text-base text-gray-600">Published on June 4, 2024</p>
           </div>
         </div>
-        <div className="bg-white py-8">
-          <div className="container mx-auto px-4 flex flex-col md:flex-row">
-            <div className="w-full md:w-3/4 px-4">
+        <div className="bg-white py-2 md:py-8">
+          <div className="container mx-auto px-1 md:px-4 flex flex-col md:flex-row">
+            <div className="w-full md:w-3/4 px-1 md:px-4">
               <img
                 src="https://i.ibb.co/c1bmdJV/8d4fe0d8-city-28030-164fcc85915.jpg"
                 alt="Blog Featured Image"
-                className="mb-8"
+                className="mb-4 md:mb-8"
               />
-              <div className="prose max-w-none">
+              <div className="text-sm md:text-base prose max-w-none">
                 <p>
                   Our last team tour, the Dhaka Historical Excursion, was an
                   enriching journey through the heart of Bangladesh vibrant
@@ -79,7 +79,7 @@ const Blog = () => {
                 </p>
               </div>
             </div>
-            <div className="w-full md:w-1/4 px-4">
+            <div className="w-full md:w-1/4 mt-3 md:mt-1 px-1 md:px-4">
               <div className="bg-gray-100 p-4">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">
                   Recent Posts
