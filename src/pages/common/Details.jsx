@@ -4,6 +4,7 @@ import TourBookingForm from "../../components/TourBookingForm";
 import useAuth from "../../hooks/useAuth";
 import useUsers from "../../hooks/useUsers";
 import { Helmet } from "react-helmet";
+import { useState } from "react";
 
 const Details = () => {
   const packages = useLoaderData();
@@ -13,7 +14,8 @@ const Details = () => {
   const [users] = useUsers();
   const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
   const role = roleUser?.role;
-  // console.log(id, packageDetail);
+  const [clickImage, setClickImage] = useState(packageDetail?.image_1)
+  // console.log(clickImage);
   const {
     _id,
     image_1,
@@ -27,6 +29,10 @@ const Details = () => {
     duration,
     description,
   } = packageDetail;
+
+  const handleImage = (clickedImage) => {
+    setClickImage(clickedImage)
+  }
   return (
     <div>
       <Helmet>
@@ -47,14 +53,24 @@ const Details = () => {
       <div className="md:flex md:mb-20 md:space-x-6">
         <div className="flex-1 md:space-y-4">
           <div className="md:p-7 border-2 rounded-sm">
-            <img src={image_1} alt="" className="w-full" />
+            <img src={clickImage} alt="" className="w-full" />
           </div>
           <div className="md:flex space-x-5">
+            <div>
+              <img
+                src={image_1}
+                alt=""
+                className="w-full md:w-56 h-40 border-2 p-3 rounded-sm"
+                onClick={() => handleImage(image_1)}
+              />
+            </div>
             <div>
               <img
                 src={image_2}
                 alt=""
                 className="w-full md:w-56 h-40 border-2 p-3 rounded-sm"
+                onClick={() => handleImage(image_2)}
+
               />
             </div>
             <div>
@@ -62,13 +78,8 @@ const Details = () => {
                 src={image_3}
                 alt=""
                 className="w-full md:w-56 h-40 border-2 p-3 rounded-sm"
-              />
-            </div>
-            <div>
-              <img
-                src={image_4}
-                alt=""
-                className="w-full md:w-56 h-40 border-2 p-3 rounded-sm"
+                onClick={() => handleImage(image_3)}
+
               />
             </div>
           </div>

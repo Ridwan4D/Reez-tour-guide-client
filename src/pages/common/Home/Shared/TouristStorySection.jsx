@@ -20,7 +20,7 @@ const TouristStorySection = () => {
       <div className="flex justify-center my-5">
         <Link
           to="/allStories"
-          className="btn btn-wide bg-[#10b981] text-white font-bold btn-ghost"
+          className="btn w-full md:btn-wide bg-[#10b981] text-white font-bold btn-ghost"
         >
           All Stories
         </Link>

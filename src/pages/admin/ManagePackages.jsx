@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ManagePackages = () => {
-    const [packages] = usePackage();
+    const [packages, refetch] = usePackage();
     const axiosSecure = useAxiosSecure();
 
     const handleDeletePackage = (id) => {
