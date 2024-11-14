@@ -1,4 +1,4 @@
-import PropType from "prop-types";
+import PropTypes from "prop-types";
 import { FaHeart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "react-tooltip/dist/react-tooltip.css";
@@ -10,10 +10,6 @@ import useWishlist from "../hooks/useWishlist";
 import Swal from "sweetalert2";
 import useUsers from "../hooks/useUsers";
 
-// =============================================
-
-// =============================================
-
 const PackageCard = ({ pack }) => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -24,13 +20,12 @@ const PackageCard = ({ pack }) => {
   const [users] = useUsers();
   const [wishList] = useWishlist();
   const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
-  const wishId = wishList.find((findId) => findId.wishId === _id)
+  const wishId = wishList.find((findId) => findId.wishId === _id);
   const role = roleUser?.role;
-  // console.log(wishId?.wishId);
 
   const handleAddWishlist = () => {
     if (wishId?.wishId === _id) {
-      return toast.error("Package already added")
+      return toast.error("Package already added");
     }
     if (user && user.email) {
       const wishItem = {
@@ -41,22 +36,21 @@ const PackageCard = ({ pack }) => {
         price,
       };
       axiosSecure.post("/wishlist", wishItem).then((res) => {
-        // console.log(res.data);
         if (res.data.insertedId) {
-          toast.success(`${tour_name}  added to wishList`);
+          toast.success(`${tour_name} added to wishlist`);
           refetch();
           setTimeout(() => {
-            navigate("/dashboard/wishList");
+            navigate("/dashboard/wishlist");
           }, 1000);
         }
       })
-        .catch(err => {
-          console.log(err.message);
-        })
+      .catch(err => {
+        console.log(err.message);
+      });
     } else {
       Swal.fire({
         title: "You are not logged in!",
-        text: "Please login to add to the cart.",
+        text: "Please login to add to the wishlist.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -68,9 +62,10 @@ const PackageCard = ({ pack }) => {
             navigate("/login", location?.state);
           }, 1000);
         }
-      })
+      });
     }
   };
+
   return (
     <div className="block rounded-lg bg-white shadow-secondary-1 dark:bg-surface-dark border-2 p-5">
       <div
@@ -81,9 +76,11 @@ const PackageCard = ({ pack }) => {
         <img className="rounded-t-lg md:h-64 w-full" src={image_1} alt="" />
         <FaHeart
           onClick={handleAddWishlist}
-          className="absolute md:text-2xl top-2 text-[#10b981] right-3 cursor-pointer"
+          className={`absolute md:text-2xl top-2 right-3 cursor-pointer ${
+            wishId?.wishId === _id ? "text-[#10b981]" : "text-white"
+          }`}
           data-tooltip-id="my-tooltip"
-          data-tooltip-content="Add to Wish List"
+          data-tooltip-content={wishId?.wishId === _id ? "Added into Wishlist" : "Add to Wishlist"}
         />
       </div>
       <div className="text-surface space-y-1 dark:text-white">
@@ -123,7 +120,9 @@ const PackageCard = ({ pack }) => {
     </div>
   );
 };
+
 PackageCard.propTypes = {
-  pack: PropType.object,
+  pack: PropTypes.object.isRequired,
 };
+
 export default PackageCard;
