@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import useAuth from "../hooks/useAuth";
 import siteLogo from "../assets/logo-white.png";
 
@@ -8,6 +8,7 @@ const Nav = () => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleLogout = () => {
     logout();
@@ -25,6 +26,19 @@ const Nav = () => {
   const toggleMobileNav = () => {
     setIsMobileNavOpen(!isMobileNavOpen);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const navLinks = (
     <>
@@ -44,7 +58,7 @@ const Nav = () => {
         <NavLink to="/contact" onClick={closeMobileNav}>Contact Us</NavLink>
       </li>
       {user ? (
-        <li className="relative">
+        <li className="relative" ref={dropdownRef}>
           <div
             tabIndex={0}
             role="button"
@@ -52,21 +66,19 @@ const Nav = () => {
             onClick={toggleDropdown}
           >
             <div className="w-10 rounded-full">
-              <img
-                alt="User Avatar"
-                src={user.photoURL}
-              />
+              <img alt="User Avatar" src={user.photoURL} />
             </div>
           </div>
           <ul
             tabIndex={0}
-            className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 bg-slate-700 text-white ${isDropdownOpen ? "block" : "hidden"
-              } lg:absolute lg:right-0 lg:mt-0 lg:bg-black/50`}
+            className={`menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 bg-slate-700 text-white ${
+              isDropdownOpen ? "block" : "hidden"
+            } lg:absolute lg:right-0 lg:mt-0 lg:bg-black/50`}
             style={{
               position: isDropdownOpen && window.innerWidth < 1024 ? "fixed" : "absolute",
               top: isDropdownOpen && window.innerWidth < 1024 ? "50%" : "auto",
               left: isDropdownOpen && window.innerWidth < 1024 ? "50%" : "auto",
-              transform: isDropdownOpen && window.innerWidth < 1024 ? "translate(-50%, -50%)" : "none"
+              transform: isDropdownOpen && window.innerWidth < 1024 ? "translate(-50%, -50%)" : "none",
             }}
           >
             <li>
@@ -97,17 +109,14 @@ const Nav = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
           <ul
             tabIndex={0}
-            className={`menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52 ${isMobileNavOpen ? "block" : "hidden"}`}
+            className={`menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52 ${
+              isMobileNavOpen ? "block" : "hidden"
+            }`}
           >
             {navLinks}
           </ul>
