@@ -9,13 +9,13 @@ import { useState } from "react";
 const Details = () => {
   const packages = useLoaderData();
   const { id } = useParams();
-  const packageDetail = packages.find((pack) => pack._id == id);
+  const packageDetail = packages.find((pack) => pack._id === id);
   const { user } = useAuth();
   const [users] = useUsers();
   const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
   const role = roleUser?.role;
   const [clickImage, setClickImage] = useState(packageDetail?.image_1);
-  // console.log(clickImage);
+
   const {
     _id,
     image_1,
@@ -28,11 +28,15 @@ const Details = () => {
     tour_plan,
     duration,
     description,
+    offerStartDate,  // New field from the Add Package update
+    offerEndDate,    // New field from the Add Package update
+    // Add any other new fields that were added in the update
   } = packageDetail;
 
   const handleImage = (clickedImage) => {
     setClickImage(clickedImage);
   };
+
   return (
     <div>
       <Helmet>
@@ -51,9 +55,9 @@ const Details = () => {
       )}
 
       <div className="md:flex md:mb-20 md:space-x-6">
-        {/* image side */}
+        {/* Image Side */}
         <div className="flex-1 md:space-y-4">
-          {/* Main large image */}
+          {/* Main Large Image */}
           <div className="p-3 border-2 rounded-md shadow-md bg-white">
             <img
               src={clickImage}
@@ -62,7 +66,7 @@ const Details = () => {
             />
           </div>
 
-          {/* Thumbnail images */}
+          {/* Thumbnail Images */}
           <div className="flex justify-center md:justify-start gap-4 flex-wrap">
             {[image_1, image_2, image_3, image_4].map((image, index) => (
               <div
@@ -84,7 +88,7 @@ const Details = () => {
           </div>
         </div>
 
-        {/* details side */}
+        {/* Details Side */}
         <div className="flex-1 bg-gray-100 md:p-10 space-y-2">
           <h3 className="text-2xl font-semibold">
             <span className="text-slate-600 font-semibold">Tour Name: </span>
@@ -101,16 +105,27 @@ const Details = () => {
             {description}
           </p>
           <p className="text-2xl font-black">
-            <span className="text-slate-600 font-semibold">Trip Cost: </span>$
-            {price}
+            <span className="text-slate-600 font-semibold">Trip Cost: </span>${price}
           </p>
           <p className="text-xl font-medium">
             <span className="text-slate-600 font-semibold">Tour Duration:</span>{" "}
             {duration}
           </p>
+
+          {/* Offer Start and End Date (New fields) */}
+          {offerStartDate && offerEndDate && (
+            <div>
+              <p className="text-xl font-medium">
+                <span className="text-slate-600 font-semibold">Offer Period:</span>{" "}
+                {new Date(offerStartDate).toLocaleDateString()} -{" "}
+                {new Date(offerEndDate).toLocaleDateString()}
+              </p>
+            </div>
+          )}
+
           <div>
             <p className="text-2xl font-black">
-              <span className="text-slate-600 font-semibold">Trip Plane: </span>
+              <span className="text-slate-600 font-semibold">Tour Plan: </span>
             </p>
             <div className="space-y-4">
               {tour_plan.map((plan, idx) => (
@@ -120,8 +135,11 @@ const Details = () => {
           </div>
         </div>
       </div>
-      {/* tour guides */}
-      {/* booking form */}
+
+      {/* Tour Guides Section */}
+      {/* Can add more sections here if needed */}
+
+      {/* Booking Form */}
       {role === "user" && (
         <TourBookingForm tourName={tour_name} tourPrice={price} />
       )}

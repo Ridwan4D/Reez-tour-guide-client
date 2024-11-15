@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../components/SectionTitle";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -19,10 +20,24 @@ const AddPackage = () => {
     reset,
     formState: { errors },
   } = useForm();
+  const [selectedImages, setSelectedImages] = useState([]);
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const filePreviews = files.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+    setSelectedImages((prevImages) => [...prevImages, ...filePreviews]);
+  };
+
+  const removeImage = (index) => {
+    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
 
   const uploadToCloudinary = async (image) => {
     const formData = new FormData();
-    formData.append("file", image);
+    formData.append("file", image.file);
     formData.append("upload_preset", CLOUDINARY_PRESET);
 
     try {
@@ -31,7 +46,7 @@ const AddPackage = () => {
         body: formData,
       });
       const data = await response.json();
-      return data.secure_url; // Cloudinary returns this for the uploaded image URL
+      return data.secure_url;
     } catch (error) {
       console.error("Image upload failed:", error);
       toast.error("Image upload failed!");
@@ -42,9 +57,7 @@ const AddPackage = () => {
   const onSubmit = async (data) => {
     try {
       const imageUrls = await Promise.all(
-        [data.image1[0], data.image2[0], data.image3[0], data.image4[0]].map(
-          uploadToCloudinary
-        )
+        selectedImages.map(uploadToCloudinary)
       );
 
       const tour_plan = [
@@ -60,10 +73,7 @@ const AddPackage = () => {
         trip_type: data.type,
         price: data.price,
         duration: data.duration,
-        image_1: imageUrls[0],
-        image_2: imageUrls[1],
-        image_3: imageUrls[2],
-        image_4: imageUrls[3],
+        images: imageUrls,
         tour_plan,
       };
 
@@ -72,6 +82,7 @@ const AddPackage = () => {
         toast.success(`${data.name} has been added to packages`);
         navigate("/allPackages");
         reset();
+        setSelectedImages([]);
       }
     } catch (error) {
       console.error("Error adding package:", error);
@@ -88,11 +99,53 @@ const AddPackage = () => {
         heading="Add New Package"
         subHeading="Write Package offer"
       />
-
       <form
-        className="max-w-5xl mx-auto border-2 border-[#10b981] p-2 md:p-6"
+        className="max-w-5xl mx-auto border-2 border-slate-400 p-2 md:p-6"
         onSubmit={handleSubmit(onSubmit)}
       >
+        {/* Image Input */}
+        <div className="mb-6">
+          <label
+            htmlFor="images"
+            className="block mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Upload Images
+          </label>
+          <input
+            type="file"
+            id="images"
+            multiple
+            onChange={handleImageChange}
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+          />
+          {errors.images && (
+            <span className="text-sm text-red-600 font-semibold">
+              Upload at least one image
+            </span>
+          )}
+        </div>
+
+        {/* Image Previews */}
+        <div className="flex flex-wrap gap-4 mb-6">
+          {selectedImages.map((image, index) => (
+            <div key={index} className="relative">
+              <img
+                src={image.preview}
+                alt={`Preview ${index + 1}`}
+                className="w-24 h-24 object-cover rounded-md"
+              />
+              <button
+                type="button"
+                onClick={() => removeImage(index)}
+                className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+              >
+                &times;
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Other Inputs */}
         <div className="grid gap-x-6 gap-y-2 md:gap-y-3 mb-6 md:grid-cols-2">
           <div>
             <label
@@ -153,25 +206,6 @@ const AddPackage = () => {
           </div>
           <div>
             <label
-              htmlFor="file_input"
-              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Image 1
-            </label>
-            <input
-              type="file"
-              {...register("image1", { required: true })}
-              id="file_input"
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            />
-            {errors.image1 && (
-              <span className="text-sm text-red-600 font-semibold">
-                Fill This Field
-              </span>
-            )}
-          </div>
-          <div>
-            <label
               htmlFor="duration"
               className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
             >
@@ -184,63 +218,6 @@ const AddPackage = () => {
               className="bg-gray-50 border border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             {errors.duration && (
-              <span className="text-sm text-red-600 font-semibold">
-                Fill This Field
-              </span>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="file_input"
-              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Image 2
-            </label>
-            <input
-              type="file"
-              {...register("image2", { required: true })}
-              id="file_input"
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            />
-            {errors.image2 && (
-              <span className="text-sm text-red-600 font-semibold">
-                Fill This Field
-              </span>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="file_input"
-              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Image 3
-            </label>
-            <input
-              type="file"
-              {...register("image3", { required: true })}
-              id="file_input"
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            />
-            {errors.image3 && (
-              <span className="text-sm text-red-600 font-semibold">
-                Fill This Field
-              </span>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="file_input"
-              className="block md:mb-2 text-xs md:text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Image 4
-            </label>
-            <input
-              type="file"
-              {...register("image4", { required: true })}
-              id="file_input"
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            />
-            {errors.image4 && (
               <span className="text-sm text-red-600 font-semibold">
                 Fill This Field
               </span>
@@ -322,32 +299,32 @@ const AddPackage = () => {
               </span>
             )}
           </div>
+          <div className="mb-5 col-span-2">
+            <label
+              htmlFor="description"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Tour Description
+            </label>
+            <textarea
+              type="text"
+              id="description"
+              {...register("description", { required: true })}
+              className="bg-gray-50 border w-full border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+            {errors.description && (
+              <span className="text-sm text-red-600 font-semibold">
+                Fill This Field
+              </span>
+            )}
+          </div>
         </div>
-        <div className="mb-5">
-          <label
-            htmlFor="description"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Tour Description
-          </label>
-          <textarea
-            type="text"
-            id="description"
-            {...register("description", { required: true })}
-            className="bg-gray-50 border w-full border-gray-300 text-gray-900 h-7 md:h-auto text-xs md:text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-          {errors.description && (
-            <span className="text-sm text-red-600 font-semibold">
-              Fill This Field
-            </span>
-          )}
-        </div>
+
         <input
           type="submit"
           value="Add Package"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         />
-        \
       </form>
     </div>
   );
