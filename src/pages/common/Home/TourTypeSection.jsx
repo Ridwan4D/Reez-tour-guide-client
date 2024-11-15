@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 
 const TourTypeSection = () => {
   const [packages] = usePackage();
-  const uniqueTripTypes = [];
 
-  packages.forEach(pack => {
-    if (!uniqueTripTypes.find(item => item.trip_type === pack.trip_type)) {
-      uniqueTripTypes.push(pack);
+  // Use reduce to get unique trip types
+  const uniqueTripTypes = packages.reduce((acc, pack) => {
+    if (!acc.some(item => item.trip_type === pack.trip_type)) {
+      acc.push(pack);
     }
-  });
+    return acc;
+  }, []);
 
   return (
     <div>
