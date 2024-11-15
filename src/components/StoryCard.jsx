@@ -19,7 +19,7 @@ const StoryCard = ({ story }) => {
         </p>
         <Link
           to={`/storyDetails/${_id}`}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#10b981] rounded-md focus:ring-4 focus:outline-none focus:ring-[#10b981]/30 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-slate-400 rounded-md focus:ring-4 focus:outline-none focus:ring-[#10b981]/30 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Read More
         </Link>

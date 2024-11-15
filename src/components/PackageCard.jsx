@@ -97,7 +97,7 @@ const PackageCard = ({ pack }) => {
         <div className="flex flex-col md:flex-row justify-between space-y-1">
           <Link
             to={`/details/${_id}`}
-            className="inline-block rounded bg-[#10b981] px-4 md:px-6 pb-1 md:pb-2 pt-1.5 md:pt-2.5 text-center text-xs md:font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+            className="inline-block rounded bg-slate-400 px-4 md:px-6 pb-1 md:pb-2 pt-1.5 md:pt-2.5 text-center text-xs md:font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
             data-twe-ripple-init
             data-twe-ripple-color="light"
           >
@@ -107,7 +107,7 @@ const PackageCard = ({ pack }) => {
           {role === "admin" && (
             <Link
               to={`/updatePackage/${_id}`}
-              className="inline-block rounded bg-[#10b981] px-4 md:px-6 pb-1 md:pb-2 pt-1.5 md:pt-2.5 text-center text-xs md:font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+              className="inline-block rounded bg-slate-400 px-4 md:px-6 pb-1 md:pb-2 pt-1.5 md:pt-2.5 text-center text-xs md:font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
               data-twe-ripple-init
               data-twe-ripple-color="light"
             >

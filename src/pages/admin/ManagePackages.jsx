@@ -47,7 +47,7 @@ const ManagePackages = () => {
                     <div className="overflow-x-auto rounded-t-xl">
                         <table className="table">
                             <thead className="uppercase text-white font-bold">
-                                <tr className="bg-[#10b981]">
+                                <tr className="bg-slate-400">
                                     <th className="text-center text-sm md:text-lg">#</th>
                                     <th className="py-2 md:py-5 text-center text-sm">Name</th>
                                     <th className="text-center text-sm">Type</th>

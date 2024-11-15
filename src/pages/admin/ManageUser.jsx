@@ -97,7 +97,7 @@ const ManageUser = () => {
           <div className="overflow-x-auto rounded-t-xl">
             <table className="table">
               <thead className="uppercase text-white font-bold">
-                <tr className="bg-[#10b981]">
+                <tr className="bg-slate-400">
                   <th className="text-center text-sm md:text-xl">#</th>
                   <th className="py-2 md:py-5 text-center text-sm md:text-lg">Name</th>
                   <th className="text-center text-sm md:text-lg">Email</th>
@@ -126,7 +126,7 @@ const ManageUser = () => {
                                 data-tooltip-id="makeAdmin"
                                 data-tooltip-content="Make Admin"
                                 onClick={() => handleRole(user, "admin", false)}
-                                className="btn bg-[#10b981] text-white text-sm md:text-lg"
+                                className="btn bg-slate-400 text-white text-sm md:text-lg"
                               >
                                 <MdAdminPanelSettings />
                               </button>
@@ -134,7 +134,7 @@ const ManageUser = () => {
                                 data-tooltip-id="makeGuide"
                                 data-tooltip-content="Make Guide"
                                 onClick={() => handleRole(user, "guide", false)}
-                                className="btn bg-[#10b981] text-white text-sm md:text-lg"
+                                className="btn bg-slate-400 text-white text-sm md:text-lg"
                               >
                                 <TbArrowGuide />
                               </button>
@@ -143,7 +143,7 @@ const ManageUser = () => {
                                   data-tooltip-id="cancelRequest"
                                   data-tooltip-content="Cancel Request"
                                   onClick={() => handleRole(user, "user", false)}
-                                  className="btn bg-[#10b981] text-white text-sm md:text-lg"
+                                  className="btn bg-slate-400 text-white text-sm md:text-lg"
                                 >
                                   <FcCancel />
                                 </button>
@@ -156,7 +156,7 @@ const ManageUser = () => {
                                   data-tooltip-id="makeAdmin"
                                   data-tooltip-content="Make Admin"
                                   onClick={() => handleRole(user, "admin", false)}
-                                  className="btn bg-[#10b981] text-white text-sm md:text-lg"
+                                  className="btn bg-slate-400 text-white text-sm md:text-lg"
                                 >
                                   <MdAdminPanelSettings />
                                 </button>
@@ -186,7 +186,7 @@ const ManageUser = () => {
       </div>
       <div className="max-w-5xl mx-auto my-7 text-center space-x-2 flex items-center">
         <button
-          className={`bg-[#10b981] text-white text-xs md:text-sm px-2 h-7 rounded-sm`}
+          className={`bg-slate-400 text-white text-xs md:text-sm px-2 h-7 rounded-sm`}
           onClick={goToPreviousPage}
           disabled={currentPage === 0}
         >
@@ -195,7 +195,7 @@ const ManageUser = () => {
         {pages.map((page) => (
           <button
             key={page}
-            className={`bg-[#10b981] text-white text-xs md:text-sm px-2 h-7 rounded-sm ${currentPage === page && "selected"}`}
+            className={`bg-slate-400 text-white text-xs md:text-sm px-2 h-7 rounded-sm ${currentPage === page && "selected"}`}
             onClick={() => {
               setCurrentPage(page);
               refetch();
@@ -205,7 +205,7 @@ const ManageUser = () => {
           </button>
         ))}
         <button
-          className={`bg-[#10b981] text-white text-xs md:text-sm px-2 h-7 rounded-sm`}
+          className={`bg-slate-400 text-white text-xs md:text-sm px-2 h-7 rounded-sm`}
           onClick={goToNextPage}
           disabled={currentPage === numberOfPages - 1}
         >

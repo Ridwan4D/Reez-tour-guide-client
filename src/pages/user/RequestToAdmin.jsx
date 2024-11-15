@@ -119,7 +119,7 @@ const RequestToAdmin = () => {
                 <input
                   type="submit"
                   value="Request"
-                  className="bg-[#10b981]/70 hover:bg-[#10b981] cursor-pointer text-white font-bold py-2 px-4 rounded"
+                  className="bg-slate-400/70 hover:bg-slate-400 cursor-pointer text-white font-bold py-2 px-4 rounded"
                 />
               </div>
             </div>

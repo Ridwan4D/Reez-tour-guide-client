@@ -43,7 +43,7 @@ const Details = () => {
           <h3 className="text-2xl">{tour_name}</h3>
           <Link
             to={`/updatePackage/${_id}`}
-            className="btn bg-[#10b981] border-0 rounded-sm text-white font-semibold"
+            className="btn bg-slate-400 border-0 rounded-sm text-white font-semibold"
           >
             Update Package
           </Link>

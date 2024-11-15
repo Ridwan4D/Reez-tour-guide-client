@@ -53,7 +53,7 @@ const WishPage = () => {
             <table className="table">
               {/* head */}
               <thead className="uppercase text-white font-bold">
-                <tr className="bg-[#10b981]">
+                <tr className="bg-slate-400">
                   <th className="text-center text-xl">#</th>
                   <th className="py-5 text-center">Image</th>
                   <th className="text-center">Tour name</th>
@@ -77,14 +77,14 @@ const WishPage = () => {
                     <td className="text-center">{item.name}</td>
                     <td className="text-center">${item.price}</td>
                     <th className="text-center">
-                      <Link to={`/details/${item.wishId}`} className="btn bg-[#10b981] text-white">
+                      <Link to={`/details/${item.wishId}`} className="btn bg-slate-400 text-white">
                         <TbListDetails />
                       </Link>
                     </th>
                     <th className="text-center">
                       <button
                         onClick={() => handleDelete(item._id)}
-                        className="btn bg-[#10b981] text-white"
+                        className="btn bg-slate-400 text-white"
                       >
                         <FaRegTrashAlt />
                       </button>

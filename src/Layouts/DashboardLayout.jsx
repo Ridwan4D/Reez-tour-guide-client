@@ -40,7 +40,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex flex-col md:flex-row p-2 md:p-0">
-      <div className="md:hidden flex justify-between items-center bg-[#10b981] p-4">
+      <div className="md:hidden flex justify-between items-center bg-slate-400 p-4">
         <h1 className="text-white text-lg">Dashboard</h1>
         <button onClick={toggleSidebar}>
           <MdMenu className="text-white text-2xl" />
@@ -48,7 +48,7 @@ const DashboardLayout = () => {
       </div>
       <div
         className={`fixed inset-y-0 left-0 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } md:relative md:translate-x-0 md:w-auto md:min-h-screen bg-[#10b981] transition-transform duration-300 ease-in-out z-50`}
+          } md:relative md:translate-x-0 md:w-auto md:min-h-screen bg-slate-400 transition-transform duration-300 ease-in-out z-50`}
         id="sideBar"
       >
         <ul className="menu p-4 font-medium text-[#151515] font-cinzel text-xs md:text-lg space-y-1">

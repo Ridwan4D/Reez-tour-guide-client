@@ -44,7 +44,7 @@ const ManageTour = () => {
             <table className="table">
               {/* head */}
               <thead className="uppercase text-white font-bold">
-                <tr className="bg-[#10b981]">
+                <tr className="bg-slate-400">
                   <th className="text-center text-xl">#</th>
                   <th className="py-5 text-center">Package Name</th>
                   <th className="text-center">Guide name</th>
@@ -69,7 +69,7 @@ const ManageTour = () => {
                       <button
                         disabled={item.status === "Rejected"}
                         onClick={() => handleAction(item._id, "Accepted")}
-                        className="btn bg-[#10b981] text-white"
+                        className="btn bg-slate-400 text-white"
                       >
                         Accept
                       </button>
@@ -78,7 +78,7 @@ const ManageTour = () => {
                       <button
                         disabled={item.status === "Accepted"}
                         onClick={() => handleAction(item._id, "Rejected")}
-                        className="btn bg-[#10b981] text-white"
+                        className="btn bg-slate-400 text-white"
                       >
                         Reject
                       </button>

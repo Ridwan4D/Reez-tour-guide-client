@@ -17,7 +17,7 @@ const HomePackages = () => {
         }
       </div>
       <div className="flex justify-center my-5">
-        <Link to="/allPackages" className="btn w-full md:btn-wide bg-[#10b981] text-white font-bold btn-ghost">All Packages</Link>
+        <Link to="/allPackages" className="btn w-full md:btn-wide bg-slate-400 text-white font-bold btn-ghost">All Packages</Link>
       </div>
     </div>
   );
