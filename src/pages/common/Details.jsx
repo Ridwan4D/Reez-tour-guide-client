@@ -14,14 +14,14 @@ const Details = () => {
   const [users] = useUsers();
   const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
   const role = roleUser?.role;
-  const [clickImage, setClickImage] = useState(packageDetail?.image_1)
+  const [clickImage, setClickImage] = useState(packageDetail?.image_1);
   // console.log(clickImage);
   const {
     _id,
     image_1,
     image_2,
     image_3,
-    // image_4,
+    image_4,
     price,
     tour_name,
     trip_type,
@@ -31,8 +31,8 @@ const Details = () => {
   } = packageDetail;
 
   const handleImage = (clickedImage) => {
-    setClickImage(clickedImage)
-  }
+    setClickImage(clickedImage);
+  };
   return (
     <div>
       <Helmet>
@@ -51,39 +51,40 @@ const Details = () => {
       )}
 
       <div className="md:flex md:mb-20 md:space-x-6">
+        {/* image side */}
         <div className="flex-1 md:space-y-4">
-          <div className="md:p-7 border-2 rounded-sm">
-            <img src={clickImage} alt="" className="w-full" />
+          {/* Main large image */}
+          <div className="p-3 border-2 rounded-md shadow-md bg-white">
+            <img
+              src={clickImage}
+              alt="Selected Tour Image"
+              className="w-full h-[400px] object-contain rounded-md transition-transform duration-300 ease-in-out hover:scale-105"
+            />
           </div>
-          <div className="md:flex space-x-5">
-            <div>
-              <img
-                src={image_1}
-                alt=""
-                className="w-full md:w-56 h-40 border-2 p-3 rounded-sm"
-                onClick={() => handleImage(image_1)}
-              />
-            </div>
-            <div>
-              <img
-                src={image_2}
-                alt=""
-                className="w-full md:w-56 h-40 border-2 p-3 rounded-sm"
-                onClick={() => handleImage(image_2)}
 
-              />
-            </div>
-            <div>
-              <img
-                src={image_3}
-                alt=""
-                className="w-full md:w-56 h-40 border-2 p-3 rounded-sm"
-                onClick={() => handleImage(image_3)}
-
-              />
-            </div>
+          {/* Thumbnail images */}
+          <div className="flex justify-center md:justify-start gap-4 flex-wrap">
+            {[image_1, image_2, image_3, image_4].map((image, index) => (
+              <div
+                key={index}
+                className={`cursor-pointer p-1 border-2 rounded-md transition duration-200 hover:shadow-lg ${
+                  clickImage === image
+                    ? "border-blue-500 ring-4 ring-blue-300"
+                    : "border-gray-300"
+                }`}
+                onClick={() => handleImage(image)}
+              >
+                <img
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  className="w-24 h-24 md:w-32 md:h-32 object-contain rounded-md"
+                />
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* details side */}
         <div className="flex-1 bg-gray-100 md:p-10 space-y-2">
           <h3 className="text-2xl font-semibold">
             <span className="text-slate-600 font-semibold">Tour Name: </span>
@@ -94,7 +95,9 @@ const Details = () => {
             {trip_type}
           </h3>
           <p className="text-sm text-gray-950">
-            <span className="text-xl text-slate-600 font-semibold">Trip Description: </span>
+            <span className="text-xl text-slate-600 font-semibold">
+              Trip Description:{" "}
+            </span>
             {description}
           </p>
           <p className="text-2xl font-black">
@@ -119,7 +122,9 @@ const Details = () => {
       </div>
       {/* tour guides */}
       {/* booking form */}
-      {role === "user" && <TourBookingForm tourName={tour_name} tourPrice={price} />}
+      {role === "user" && (
+        <TourBookingForm tourName={tour_name} tourPrice={price} />
+      )}
     </div>
   );
 };
