@@ -21,7 +21,7 @@ const Details = () => {
     image_1,
     image_2,
     image_3,
-    image_4,
+    // image_4,
     price,
     tour_name,
     trip_type,
@@ -86,28 +86,28 @@ const Details = () => {
         </div>
         <div className="flex-1 bg-gray-100 md:p-10 space-y-2">
           <h3 className="text-2xl font-semibold">
-            <span className="text-[#10b981] font-bold">Tour Name: </span>
+            <span className="text-slate-600 font-semibold">Tour Name: </span>
             {tour_name}
           </h3>
           <h3 className="text-xl font-semibold">
-            <span className="text-[#10b981] font-bold">Trip Type: </span>
+            <span className="text-slate-600 font-semibold">Trip Type: </span>
             {trip_type}
           </h3>
-          <p className="text-sm text-gray-600">
-            <span className="text-[#10b981] font-bold">Trip Description: </span>
+          <p className="text-sm text-gray-950">
+            <span className="text-xl text-slate-600 font-semibold">Trip Description: </span>
             {description}
           </p>
           <p className="text-2xl font-black">
-            <span className="text-[#10b981] font-bold">Trip Cost: </span>$
+            <span className="text-slate-600 font-semibold">Trip Cost: </span>$
             {price}
           </p>
           <p className="text-xl font-medium">
-            <span className="text-[#10b981] font-bold">Tour Duration:</span>{" "}
+            <span className="text-slate-600 font-semibold">Tour Duration:</span>{" "}
             {duration}
           </p>
           <div>
             <p className="text-2xl font-black">
-              <span className="text-[#10b981] font-bold">Trip Plane: </span>
+              <span className="text-slate-600 font-semibold">Trip Plane: </span>
             </p>
             <div className="space-y-4">
               {tour_plan.map((plan, idx) => (
