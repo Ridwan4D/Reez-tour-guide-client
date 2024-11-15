@@ -1,15 +1,16 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../components/SectionTitle";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
+const CLOUDINARY_API = `https://api.cloudinary.com/v1_1/${
+  import.meta.env.VITE_CLOUDINARY_API
+}/image/upload`;
+
 const AddPackage = () => {
-  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const {
@@ -18,79 +19,66 @@ const AddPackage = () => {
     reset,
     formState: { errors },
   } = useForm();
-  // const info = {tour_name,description,trip_type,price,image_1,image_2,image_3,image_4,duration,activities1,activities2,activities3,activities4}
+
+  const uploadToCloudinary = async (image) => {
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", CLOUDINARY_PRESET);
+
+    try {
+      const response = await fetch(CLOUDINARY_API, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      return data.secure_url; // Cloudinary returns this for the uploaded image URL
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      toast.error("Image upload failed!");
+      throw new Error("Cloudinary upload error");
+    }
+  };
+
   const onSubmit = async (data) => {
-    const imageFile1 = { image: data.image1[0] };
-    const imageFile2 = { image: data.image2[0] };
-    const imageFile3 = { image: data.image3[0] };
-    const imageFile4 = { image: data.image4[0] };
-    const tour_plan = [
-      {
-        day: 1,
-        activities: data.activities1,
-      },
-      {
-        day: 2,
-        activities: data.activities2,
-      },
-      {
-        day: 3,
-        activities: data.activities3,
-      },
-      {
-        day: 4,
-        activities: data.activities4,
-      },
-    ];
-    // console.log(imageFile);
-    const res1 = await axiosPublic.post(image_hosting_api, imageFile1, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    const res2 = await axiosPublic.post(image_hosting_api, imageFile2, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    const res3 = await axiosPublic.post(image_hosting_api, imageFile3, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    const res4 = await axiosPublic.post(image_hosting_api, imageFile4, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-    // console.log(
-    //   data,
-    //   res1.data.data.display_url,
-    //   res2.data.data.display_url,
-    //   res3.data.data.display_url,
-    //   res4.data.data.display_url,
-    //   tour_plan
-    // );
-    const packageInfo = {
-      tour_name: data.name,
-      description: data.description,
-      trip_type: data.type,
-      price: data.price,
-      duration: data.duration,
-      image_1: res1.data.data.display_url,
-      image_2: res2.data.data.display_url,
-      image_3: res3.data.data.display_url,
-      image_4: res4.data.data.display_url,
-      tour_plan,
-    };
-    axiosSecure.post("/packages", packageInfo).then((res) => {
+    try {
+      const imageUrls = await Promise.all(
+        [data.image1[0], data.image2[0], data.image3[0], data.image4[0]].map(
+          uploadToCloudinary
+        )
+      );
+
+      const tour_plan = [
+        { day: 1, activities: data.activities1 },
+        { day: 2, activities: data.activities2 },
+        { day: 3, activities: data.activities3 },
+        { day: 4, activities: data.activities4 },
+      ];
+
+      const packageInfo = {
+        tour_name: data.name,
+        description: data.description,
+        trip_type: data.type,
+        price: data.price,
+        duration: data.duration,
+        image_1: imageUrls[0],
+        image_2: imageUrls[1],
+        image_3: imageUrls[2],
+        image_4: imageUrls[3],
+        tour_plan,
+      };
+
+      const res = await axiosSecure.post("/packages", packageInfo);
       if (res.data.insertedId) {
-        toast.success(`${data.name} is added in package`);
+        toast.success(`${data.name} has been added to packages`);
         navigate("/allPackages");
         reset();
       }
-    });
+    } catch (error) {
+      console.error("Error adding package:", error);
+      toast.error("Failed to add package!");
+    }
   };
+
   return (
     <div>
       <Helmet>
@@ -359,6 +347,7 @@ const AddPackage = () => {
           value="Add Package"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         />
+        \
       </form>
     </div>
   );
