@@ -20,7 +20,7 @@ const TourTypeSection = () => {
         subHeading="Choose Your Favorite Type"
       />
       <div>
-        <div className="flex overflow-x-auto gap-x-5">
+        <div id="tourTypeId" className="flex overflow-x-auto gap-x-5 py-2">
           {uniqueTripTypes.map((pack, idx) => (
             <Link
               key={idx}
