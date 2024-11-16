@@ -19,9 +19,9 @@ const PackageCard = ({ pack }) => {
   const location = useLocation();
   const [users] = useUsers();
   const [wishList] = useWishlist();
-  const roleUser = users.find((findUser) => findUser.userEmail === user?.email);
+  const theUser = users.find((findUser) => findUser.userEmail === user?.email);
   const wishId = wishList.find((findId) => findId.wishId === _id);
-  const role = roleUser?.role;
+  const role = theUser?.role;
 
   const handleAddWishlist = () => {
     if (wishId?.wishId === _id) {
@@ -35,18 +35,20 @@ const PackageCard = ({ pack }) => {
         email: user.email,
         price,
       };
-      axiosSecure.post("/wishlist", wishItem).then((res) => {
-        if (res.data.insertedId) {
-          toast.success(`${tour_name} added to wishlist`);
-          refetch();
-          setTimeout(() => {
-            navigate("/dashboard/wishlist");
-          }, 1000);
-        }
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
+      axiosSecure
+        .post("/wishlist", wishItem)
+        .then((res) => {
+          if (res.data.insertedId) {
+            toast.success(`${tour_name} added to wishlist`);
+            refetch();
+            setTimeout(() => {
+              navigate("/dashboard/wishlist");
+            }, 1000);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     } else {
       Swal.fire({
         title: "You are not logged in!",
@@ -74,14 +76,18 @@ const PackageCard = ({ pack }) => {
         data-twe-ripple-color="light"
       >
         <img className="rounded-t-lg md:h-64 w-full" src={image_1} alt="" />
-        <FaHeart
-          onClick={handleAddWishlist}
-          className={`absolute md:text-2xl top-2 right-3 cursor-pointer ${
-            wishId?.wishId === _id ? "text-[#10b981]" : "text-white"
-          }`}
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content={wishId?.wishId === _id ? "Added into Wishlist" : "Add to Wishlist"}
-        />
+        {role === "user" && (
+          <FaHeart
+            onClick={handleAddWishlist}
+            className={`absolute md:text-2xl top-2 right-3 cursor-pointer ${
+              wishId?.wishId === _id ? "text-[#10b981]" : "text-white"
+            }`}
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content={
+              wishId?.wishId === _id ? "Added into Wishlist" : "Add to Wishlist"
+            }
+          />
+        )}
       </div>
       <div className="text-surface space-y-1 dark:text-white">
         <h5 className="text-base md:text-xl font-medium leading-tight">
